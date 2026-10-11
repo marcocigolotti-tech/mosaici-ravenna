@@ -1,0 +1,2329 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>L'Oro di Bisanzio a Ravenna - Hogwarts Arte & Immagine (Prof. Marco Cigolotti)</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Cinzel, MedievalSharp, Inter, and Lexend -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=MedievalSharp&family=Inter:wght@400;500;600;700&family=Lexend:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            hogwarts: {
+              gold: '#D4AF37',
+              goldLight: '#F5E07B',
+              goldDark: '#997A15',
+              darkRed: '#740001',
+              crimson: '#941B0C',
+              lapis: '#102A71',
+              byzantineBlue: '#0A1C42',
+              parchment: '#FDF6E2',
+              parchmentDark: '#E8D8B0',
+              parchmentDeep: '#D4C19C'
+            }
+          },
+          fontFamily: {
+            title: ['Cinzel', 'serif'],
+            magical: ['MedievalSharp', 'cursive'],
+            sans: ['Inter', 'sans-serif'],
+            dyslexic: ['Lexend', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Dynamic Accessibility & Visual Tokens */
+    :root {
+      --app-font-family: 'Inter', sans-serif;
+      --app-font-title: 'Cinzel', serif;
+      --app-font-scale: 1rem;
+      --app-line-height: 1.6;
+      --app-letter-spacing: normal;
+      --bg-main: radial-gradient(circle at 50% 20%, #1a0b2e 0%, #0d0617 50%, #05020a 100%);
+      --text-main: #f1f5f9;
+      --card-bg: linear-gradient(135deg, #fff9e6 0%, #f7ecc5 50%, #edd8a4 100%);
+      --card-border: #b8860b;
+      --card-text: #2c1a0e;
+    }
+
+    body {
+      font-family: var(--app-font-family);
+      font-size: var(--app-font-scale);
+      line-height: var(--app-line-height);
+      letter-spacing: var(--app-letter-spacing);
+      background: var(--bg-main);
+      color: var(--text-main);
+      overflow-x: hidden;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    .font-title { font-family: var(--app-font-title); }
+    .font-magic { font-family: 'MedievalSharp', cursive; }
+
+    /* Parchment Card Aesthetic */
+    .parchment-card {
+      background: var(--card-bg);
+      border: 3px double var(--card-border);
+      color: var(--card-text);
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 0 15px rgba(212, 175, 55, 0.25);
+    }
+
+    /* THEME: High Contrast Dark */
+    body.theme-high-contrast-dark {
+      --bg-main: #000000;
+      --text-main: #ffff00;
+      --card-bg: #0b0b0b;
+      --card-border: #ffff00;
+      --card-text: #ffffff;
+    }
+    body.theme-high-contrast-dark .parchment-card {
+      box-shadow: 0 0 0 2px #ffff00;
+    }
+
+    /* THEME: High Contrast Light */
+    body.theme-high-contrast-light {
+      --bg-main: #ffffff;
+      --text-main: #000000;
+      --card-bg: #ffffff;
+      --card-border: #000000;
+      --card-text: #000000;
+    }
+    body.theme-high-contrast-light .parchment-card {
+      box-shadow: 0 0 0 2px #000000;
+    }
+
+    /* THEME: Eye-Comfort Cream / Sepia */
+    body.theme-cream {
+      --bg-main: #f5eedc;
+      --text-main: #2b1f14;
+      --card-bg: #fffbf0;
+      --card-border: #8b5a2b;
+      --card-text: #2b1f14;
+    }
+
+    /* Reading Ruler */
+    #reading-ruler {
+      position: fixed;
+      left: 0;
+      width: 100vw;
+      height: 48px;
+      background: rgba(254, 240, 138, 0.22);
+      border-top: 3px dashed #d97706;
+      border-bottom: 3px dashed #d97706;
+      pointer-events: none;
+      z-index: 9990;
+      display: none;
+      box-shadow: 0 0 20px rgba(217, 119, 6, 0.25);
+      transform: translateY(-50%);
+    }
+
+    /* Focus Reading Mask */
+    #focus-mask-top, #focus-mask-bottom {
+      position: fixed;
+      left: 0;
+      width: 100vw;
+      background: rgba(0, 0, 0, 0.65);
+      pointer-events: none;
+      z-index: 9989;
+      display: none;
+      transition: height 0.05s ease-out;
+    }
+    #focus-mask-top { top: 0; }
+    #focus-mask-bottom { bottom: 0; }
+
+    /* 3D Flip Card */
+    .flip-card { perspective: 1000px; }
+    .flip-card-inner {
+      transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1);
+      transform-style: preserve-3d;
+    }
+    .flip-card.flipped .flip-card-inner { transform: rotateY(180deg); }
+    .flip-card-front, .flip-card-back {
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+    }
+    .flip-card-back { transform: rotateY(180deg); }
+
+    .lumos-active {
+      box-shadow: 0 0 45px 14px rgba(255, 243, 145, 0.95) !important;
+      border-color: #fff48f !important;
+    }
+
+    /* TTS Karaoke Reading Highlight */
+    .tts-reading-highlight {
+      background-color: #fef08a !important;
+      color: #0f172a !important;
+      padding: 2px 6px;
+      border-radius: 4px;
+      box-shadow: 0 0 10px rgba(250, 204, 21, 0.8);
+      font-weight: 700;
+      transition: all 0.2s ease;
+    }
+
+    /* Floating particles */
+    @keyframes floatUp {
+      0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+      20% { opacity: 0.8; }
+      80% { opacity: 0.8; }
+      100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+    }
+    .particle {
+      position: fixed;
+      pointer-events: none;
+      background: radial-gradient(circle, #fde047 20%, #ca8a04 80%);
+      border-radius: 2px;
+      animation: floatUp 8s linear infinite;
+      z-index: 0;
+    }
+    body.reduced-motion * {
+      animation: none !important;
+      transition: none !important;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-amber-400 selection:text-slate-900">
+
+  <!-- Interactive Accessibility Elements -->
+  <div id="reading-ruler"></div>
+  <div id="focus-mask-top"></div>
+  <div id="focus-mask-bottom"></div>
+  <div id="sparkles-container"></div>
+
+  <header class="relative z-20 border-b border-amber-500/40 bg-slate-950/95 backdrop-blur-md sticky top-0 shadow-2xl">
+    <div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-3">
+      
+      <!-- Title & Branding with Prof. Marco Cigolotti Attribution -->
+      <div class="flex items-center gap-3 cursor-pointer" onclick="switchTab('comic')">
+        <div class="w-12 h-12 rounded-xl bg-gradient-to-tr from-amber-600 via-amber-400 to-yellow-200 p-0.5 shadow-lg shadow-amber-500/30 flex items-center justify-center">
+          <div class="w-full h-full bg-slate-900 rounded-[10px] flex items-center justify-center text-amber-300">
+            <i class="fa-solid fa-wand-magic-sparkles text-xl"></i>
+          </div>
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <h1 class="font-title text-base sm:text-lg font-black tracking-wider text-amber-300 uppercase">L'Oro di Bisanzio</h1>
+            <span class="text-[10px] bg-amber-500/20 text-amber-300 border border-amber-400/40 px-2 py-0.5 rounded-full font-bold">Arte 2ª Media</span>
+          </div>
+          <p class="text-xs text-amber-100/80 font-magic">I Mosaici di Ravenna • Ideato dal Prof. Marco Cigolotti</p>
+        </div>
+      </div>
+
+      <!-- Header Controls: House Points, Badges, Sound & BES Panel Toggle -->
+      <div class="flex items-center gap-2 sm:gap-3">
+        <!-- House Points Pill -->
+        <div class="bg-amber-950/80 border border-amber-500/50 rounded-xl px-3 py-1.5 flex items-center gap-2 shadow-inner">
+          <i class="fa-solid fa-trophy text-amber-400 text-sm"></i>
+          <span class="text-xs text-amber-200 font-bold uppercase hidden sm:inline">Punti Casa:</span>
+          <span id="house-points" class="font-mono text-sm font-black text-amber-300 transition-transform">100</span>
+        </div>
+
+        <!-- Badges mini indicators -->
+        <div class="flex items-center gap-1 bg-slate-900/90 border border-amber-500/30 px-2.5 py-1.5 rounded-xl">
+          <span id="badge-story" class="text-xs p-1 rounded opacity-30 text-amber-300" title="Distintivo Storico Ravenna"><i class="fa-solid fa-book-bookmark"></i></span>
+          <span id="badge-mosaic" class="text-xs p-1 rounded opacity-30 text-amber-300" title="Distintivo Maestro Mosaicista"><i class="fa-solid fa-cubes"></i></span>
+          <span id="badge-boss" class="text-xs p-1 rounded opacity-30 text-amber-300" title="Distintivo Duellante d'Oro"><i class="fa-solid fa-bolt"></i></span>
+        </div>
+
+        <!-- Sound FX Toggle -->
+        <button id="sound-toggle" onclick="toggleAudio()" class="text-amber-300 hover:text-amber-100 text-sm p-2 bg-slate-900 rounded-xl border border-amber-500/30 shadow transition" title="Attiva/Disattiva Suoni Effetti">
+          <i class="fa-solid fa-volume-high"></i>
+        </button>
+
+        <!-- Accessibility / BES Toggle Button -->
+        <button onclick="toggleAccessibilityModal()" class="px-3 py-1.5 bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-amber-400 text-slate-950 rounded-xl text-xs font-bold shadow-md shadow-amber-500/20 flex items-center gap-1.5 transition">
+          <i class="fa-solid fa-universal-access text-sm"></i>
+          <span class="hidden md:inline">Strumenti BES / DSA</span>
+        </button>
+      </div>
+
+    </div>
+
+    <!-- Universal Text-To-Speech Bar with Voice Selector -->
+    <div id="tts-global-bar" class="bg-indigo-950/90 border-t border-b border-indigo-500/40 px-4 py-2 text-xs flex flex-wrap items-center justify-between gap-2 shadow-inner">
+      <div class="flex items-center gap-2 text-amber-200">
+        <i class="fa-solid fa-headphones-simple text-amber-400 text-sm"></i>
+        <span class="font-bold">Lettore Vocale Naturale (it-IT):</span>
+        <span id="tts-status-text" class="text-slate-300 italic text-[11px]">Inizializzazione voce...</span>
+      </div>
+      <div class="flex items-center gap-2 flex-wrap">
+        <!-- Voice Selector Dropdown (HQ / Natural) -->
+        <div class="flex items-center gap-1 text-amber-200">
+          <label for="tts-voice-select" class="text-[11px] font-semibold flex items-center gap-1">
+            <i class="fa-solid fa-microphone-lines text-amber-400"></i> Voce:
+          </label>
+          <select id="tts-voice-select" onchange="changeTTSVoice(this.value)" class="bg-slate-900 text-amber-300 border border-indigo-400/50 rounded px-2 py-0.5 text-xs font-bold max-w-[170px] sm:max-w-[210px] truncate" title="Scegli una voce più naturale e umana">
+            <option value="">Rilevamento voci HQ in corso...</option>
+          </select>
+          <button onclick="testCurrentVoice()" class="px-2 py-0.5 bg-indigo-800 hover:bg-indigo-700 text-amber-200 border border-indigo-400/40 rounded text-[10px] font-bold" title="Ascolta un campione della voce">
+            Prova
+          </button>
+        </div>
+
+        <button onclick="readCurrentSection()" id="btn-tts-read-curr" class="px-3 py-1 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold rounded-lg flex items-center gap-1 shadow transition">
+          <i class="fa-solid fa-play text-xs"></i> Leggi Schermata
+        </button>
+        <button onclick="pauseResumeTTS()" id="btn-tts-pause" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-amber-200 rounded-lg border border-amber-500/30">
+          <i class="fa-solid fa-pause"></i>
+        </button>
+        <button onclick="stopTTS()" class="px-2.5 py-1 bg-rose-900/80 hover:bg-rose-800 text-white rounded-lg border border-rose-500/40">
+          <i class="fa-solid fa-stop"></i>
+        </button>
+        
+        <!-- Speed Dropdown -->
+        <div class="flex items-center gap-1 text-amber-200">
+          <label for="tts-speed" class="text-[11px] font-semibold">Velocità:</label>
+          <select id="tts-speed" onchange="updateTTSSpeed(this.value)" class="bg-slate-900 text-amber-300 border border-indigo-400/50 rounded px-1.5 py-0.5 text-xs font-bold">
+            <option value="0.85">0.85x (Lenta BES)</option>
+            <option value="1.0" selected>1.0x (Naturale)</option>
+            <option value="1.15">1.15x (Fluida)</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab Bar -->
+    <nav class="max-w-7xl mx-auto px-4 flex gap-1 sm:gap-2 overflow-x-auto pb-2 pt-2 border-t border-amber-500/20 text-xs sm:text-sm font-semibold">
+      <button onclick="switchTab('comic')" id="tab-comic" class="tab-btn active px-3.5 py-1.5 rounded-lg flex items-center gap-2 transition bg-amber-500 text-slate-950 font-bold shadow-md shadow-amber-500/20 whitespace-nowrap">
+        <i class="fa-solid fa-book-open"></i>
+        <span>1. La Storia Magica</span>
+      </button>
+      <button onclick="switchTab('mosaic')" id="tab-mosaic" class="tab-btn px-3.5 py-1.5 rounded-lg flex items-center gap-2 transition text-amber-200 hover:bg-slate-800 whitespace-nowrap">
+        <i class="fa-solid fa-cubes"></i>
+        <span>2. Atelier dei Mosaici</span>
+      </button>
+      <button onclick="switchTab('games')" id="tab-games" class="tab-btn px-3.5 py-1.5 rounded-lg flex items-center gap-2 transition text-amber-200 hover:bg-slate-800 whitespace-nowrap">
+        <i class="fa-solid fa-puzzle-piece"></i>
+        <span>3. Mini-Giochi</span>
+      </button>
+      <button onclick="switchTab('quiz')" id="tab-quiz" class="tab-btn px-3.5 py-1.5 rounded-lg flex items-center gap-2 transition text-amber-200 hover:bg-slate-800 whitespace-nowrap">
+        <i class="fa-solid fa-feather-pointed"></i>
+        <span>4. Quiz del G.U.F.O.</span>
+      </button>
+      <button onclick="switchTab('boss')" id="tab-boss" class="tab-btn px-3.5 py-1.5 rounded-lg flex items-center gap-2 transition text-emerald-300 hover:bg-slate-800 border border-emerald-500/40 whitespace-nowrap">
+        <i class="fa-solid fa-skull"></i>
+        <span>5. Duello: Harry vs Lord Voldemort</span>
+      </button>
+    </nav>
+  </header>
+
+  <!-- MODALE PANNELLO ACCESSIBILITÀ & BES/DSA -->
+  <aside id="accessibility-drawer" class="fixed inset-y-0 right-0 max-w-md w-full bg-slate-950/95 border-l-2 border-amber-500/60 p-5 shadow-2xl z-[9999] transform translate-x-full transition-transform duration-300 overflow-y-auto text-slate-100">
+    <div class="flex items-center justify-between border-b border-amber-500/30 pb-3 mb-4">
+      <div class="flex items-center gap-2 text-amber-400">
+        <i class="fa-solid fa-universal-access text-xl"></i>
+        <h3 class="font-title text-base font-bold text-amber-300">Strumenti per l'Accessibilità & BES/DSA</h3>
+      </div>
+      <button onclick="toggleAccessibilityModal()" class="text-slate-400 hover:text-white text-lg p-1">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+
+    <div class="space-y-5 text-xs sm:text-sm">
+
+      <!-- Informazioni Progetto & Docente -->
+      <div class="p-3 bg-amber-950/40 rounded-xl border border-amber-500/40 space-y-1">
+        <div class="text-amber-300 font-bold flex items-center gap-2">
+          <i class="fa-solid fa-chalkboard-user"></i> Ideazione e Cura Didattica
+        </div>
+        <p class="text-[11px] text-amber-100/90 leading-relaxed">
+          Progetto per l'insegnamento di <strong>Arte e Immagine (Scuola Secondaria di 1° Grado, Classe 2ª)</strong> ideato e creato dal <strong>Prof. Marco Cigolotti</strong>.
+        </p>
+      </div>
+
+      <!-- Sintesi Vocale ad Alta Qualità & Tonalità -->
+      <div class="p-3 bg-slate-900 rounded-xl border border-amber-500/30 space-y-2.5">
+        <label class="font-bold text-amber-300 flex items-center gap-2">
+          <i class="fa-solid fa-waveform-lines text-amber-400"></i> Voce di Lettura Umana & Naturale
+        </label>
+        <p class="text-[11px] text-slate-400">Scegli la voce più fluida installata sul tuo dispositivo (Neural / Natural / Google):</p>
+        <div>
+          <select id="tts-voice-drawer-select" onchange="changeTTSVoice(this.value)" class="w-full bg-slate-950 text-amber-200 border border-amber-500/50 rounded-lg p-2 text-xs font-bold">
+            <option value="">Caricamento voci...</option>
+          </select>
+        </div>
+        <div class="flex items-center justify-between pt-1">
+          <span class="text-[11px] text-slate-300">Tonalità (Pitch naturale):</span>
+          <div class="flex gap-1.5">
+            <button onclick="setPitch(0.95)" class="px-2 py-0.5 bg-slate-800 rounded border border-slate-700 hover:bg-slate-700 text-[11px]">Calda</button>
+            <button onclick="setPitch(1.02)" class="px-2 py-0.5 bg-amber-600 text-slate-950 font-bold rounded text-[11px]">Naturale</button>
+            <button onclick="setPitch(1.15)" class="px-2 py-0.5 bg-slate-800 rounded border border-slate-700 hover:bg-slate-700 text-[11px]">Vivace</button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 1. Font ad Alta Leggibilità -->
+      <div class="p-3 bg-slate-900 rounded-xl border border-amber-500/30 space-y-2">
+        <label class="font-bold text-amber-300 flex items-center gap-2">
+          <i class="fa-solid fa-font"></i> Tipografia & Font Dislessia
+        </label>
+        <p class="text-[11px] text-slate-400">Attiva caratteri con peso e spaziatura ottimizzati per DSA:</p>
+        <div class="grid grid-cols-2 gap-2">
+          <button onclick="setFontFamily('lexend')" id="btn-font-lexend" class="p-2 rounded-lg bg-amber-600/30 border border-amber-500/60 font-bold hover:bg-amber-600/50 transition">
+            Lexend / Dyslexic
+          </button>
+          <button onclick="setFontFamily('standard')" id="btn-font-standard" class="p-2 rounded-lg bg-slate-800 border border-slate-700 hover:bg-slate-700 transition">
+            Standard (Inter)
+          </button>
+        </div>
+      </div>
+
+      <!-- 2. Dimensione Testo, Interlinea e Spaziatura -->
+      <div class="p-3 bg-slate-900 rounded-xl border border-amber-500/30 space-y-3">
+        <label class="font-bold text-amber-300 flex items-center gap-2">
+          <i class="fa-solid fa-text-height"></i> Dimensioni & Spaziature
+        </label>
+        
+        <div>
+          <div class="flex justify-between text-[11px] text-slate-300 mb-1">
+            <span>Dimensione Carattere:</span>
+            <span id="font-size-label" class="font-bold text-amber-400">100%</span>
+          </div>
+          <div class="flex gap-2">
+            <button onclick="adjustFontSize(-0.1)" class="flex-1 py-1 bg-slate-800 border border-slate-700 rounded font-bold hover:bg-slate-700">A -</button>
+            <button onclick="resetFontSize()" class="flex-1 py-1 bg-slate-800 border border-slate-700 rounded font-bold hover:bg-slate-700">Normale</button>
+            <button onclick="adjustFontSize(0.1)" class="flex-1 py-1 bg-slate-800 border border-slate-700 rounded font-bold hover:bg-slate-700">A +</button>
+            <button onclick="adjustFontSize(0.25)" class="flex-1 py-1 bg-amber-600 text-slate-950 font-bold rounded hover:bg-amber-500">A ++</button>
+          </div>
+        </div>
+
+        <div>
+          <div class="flex justify-between text-[11px] text-slate-300 mb-1">
+            <span>Interlinea (Line Height):</span>
+            <span id="line-height-label" class="font-bold text-amber-400">1.6</span>
+          </div>
+          <div class="grid grid-cols-3 gap-2">
+            <button onclick="setLineHeight('1.5')" class="py-1 bg-slate-800 rounded border border-slate-700 hover:bg-slate-700">1.5</button>
+            <button onclick="setLineHeight('1.8')" class="py-1 bg-slate-800 rounded border border-slate-700 hover:bg-slate-700">1.8 (BES)</button>
+            <button onclick="setLineHeight('2.0')" class="py-1 bg-slate-800 rounded border border-slate-700 hover:bg-slate-700">2.0 (Ampio)</button>
+          </div>
+        </div>
+
+        <div>
+          <div class="flex justify-between text-[11px] text-slate-300 mb-1">
+            <span>Spaziatura Lettere:</span>
+            <span id="letter-spacing-label" class="font-bold text-amber-400">Normale</span>
+          </div>
+          <div class="grid grid-cols-3 gap-2">
+            <button onclick="setLetterSpacing('normal')" class="py-1 bg-slate-800 rounded border border-slate-700 hover:bg-slate-700">Normale</button>
+            <button onclick="setLetterSpacing('0.08em')" class="py-1 bg-slate-800 rounded border border-slate-700 hover:bg-slate-700">+ Ampia</button>
+            <button onclick="setLetterSpacing('0.15em')" class="py-1 bg-slate-800 rounded border border-slate-700 hover:bg-slate-700">++ Massima</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. Modalità Contrasto & Comfort Visivo -->
+      <div class="p-3 bg-slate-900 rounded-xl border border-amber-500/30 space-y-2">
+        <label class="font-bold text-amber-300 flex items-center gap-2">
+          <i class="fa-solid fa-circle-half-stroke"></i> Tema & Contrasto Visivo
+        </label>
+        <div class="grid grid-cols-2 gap-2 text-xs">
+          <button onclick="setTheme('default')" class="p-2 rounded bg-slate-950 border border-amber-500/60 text-amber-300 font-bold hover:scale-105 transition">
+            Hogwarts Oro
+          </button>
+          <button onclick="setTheme('cream')" class="p-2 rounded bg-[#fffbf0] text-[#2b1f14] font-bold border border-[#8b5a2b] hover:scale-105 transition">
+            Crema / Riposo
+          </button>
+          <button onclick="setTheme('high-dark')" class="p-2 rounded bg-black text-yellow-300 font-bold border border-yellow-300 hover:scale-105 transition">
+            Alto Contrasto Scuro
+          </button>
+          <button onclick="setTheme('high-light')" class="p-2 rounded bg-white text-black font-bold border border-black hover:scale-105 transition">
+            Alto Contrasto Chiaro
+          </button>
+        </div>
+      </div>
+
+      <!-- 4. Righello e Maschera di Lettura Guidata -->
+      <div class="p-3 bg-slate-900 rounded-xl border border-amber-500/30 space-y-2">
+        <label class="font-bold text-amber-300 flex items-center gap-2">
+          <i class="fa-solid fa-ruler-horizontal"></i> Righello & Guida di Lettura (Anti-salto riga)
+        </label>
+        <div class="flex flex-col gap-2">
+          <button onclick="toggleReadingRuler()" id="btn-toggle-ruler" class="w-full py-2 bg-slate-800 hover:bg-slate-700 rounded-lg border border-slate-600 flex items-center justify-center gap-2 font-bold text-xs">
+            <i class="fa-solid fa-grip-lines"></i> Attiva Righello Orizzontale
+          </button>
+          <button onclick="toggleFocusMask()" id="btn-toggle-mask" class="w-full py-2 bg-slate-800 hover:bg-slate-700 rounded-lg border border-slate-600 flex items-center justify-center gap-2 font-bold text-xs">
+            <i class="fa-solid fa-window-maximize"></i> Maschera Focus (Messa a Fuoco Riga)
+          </button>
+        </div>
+      </div>
+
+      <!-- 5. Facilitazioni Gioco (Tempo Aggiuntivo per il Duello) -->
+      <div class="p-3 bg-slate-900 rounded-xl border border-amber-500/30 space-y-2">
+        <label class="font-bold text-amber-300 flex items-center gap-2">
+          <i class="fa-solid fa-stopwatch-20"></i> Compensazione Tempo Duello (BES / DSA)
+        </label>
+        <div class="flex items-center justify-between">
+          <span class="text-[11px] text-slate-300">+50% Tempo nella Boss Challenge (90s):</span>
+          <input type="checkbox" id="chk-extra-time" onchange="toggleExtraTime(this.checked)" class="w-5 h-5 accent-amber-500 cursor-pointer">
+        </div>
+        <div class="flex items-center justify-between pt-2 border-t border-slate-800">
+          <span class="text-[11px] text-slate-300">Riduci Animazioni (Motion Sensitive):</span>
+          <input type="checkbox" id="chk-reduce-motion" onchange="toggleReducedMotion(this.checked)" class="w-5 h-5 accent-amber-500 cursor-pointer">
+        </div>
+      </div>
+
+      <div class="pt-2">
+        <button onclick="resetAllAccessibility()" class="w-full py-2 bg-slate-800 hover:bg-rose-900/60 text-slate-300 rounded-xl border border-slate-700 text-xs font-semibold">
+          Ripristina Impostazioni Predefinite
+        </button>
+      </div>
+
+    </div>
+  </aside>
+
+  <main class="relative z-10 flex-1 max-w-6xl mx-auto w-full p-4 md:p-6">
+    
+    <!-- SECTION 1: COMIC STORY -->
+    <section id="sec-comic" class="tab-content block">
+      <div class="parchment-card rounded-2xl p-5 md:p-8 shadow-2xl relative overflow-hidden">
+        
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 border-b-2 border-amber-900/20 pb-4 mb-6">
+          <div>
+            <div class="flex items-center gap-2 text-xs font-bold text-amber-800 uppercase tracking-widest font-title">
+              <i class="fa-solid fa-hourglass-start"></i> Anno 547 d.C. • VI Secolo
+            </div>
+            <h2 class="font-title text-2xl md:text-3xl font-extrabold text-amber-950">Missione Ravenna: La Passaporta Bizantina</h2>
+          </div>
+          
+          <div class="flex items-center gap-2">
+            <button onclick="speakCurrentVignette()" class="px-3.5 py-1.5 bg-indigo-700 hover:bg-indigo-600 text-white rounded-xl text-xs font-bold shadow flex items-center gap-1.5 transition">
+              <i class="fa-solid fa-volume-high"></i> Ascolta Fumetto
+            </button>
+          </div>
+        </div>
+
+        <!-- Comic Viewer -->
+        <div class="relative bg-amber-950/90 p-3 sm:p-5 rounded-2xl border-4 border-amber-600/70 shadow-2xl">
+          <div id="comic-slide" class="min-h-[380px] sm:min-h-[420px] bg-gradient-to-b from-slate-900 via-indigo-950 to-slate-900 rounded-xl p-5 md:p-8 text-white flex flex-col justify-between border border-amber-400/30 relative">
+            
+            <!-- Vignette Header -->
+            <div class="flex justify-between items-center border-b border-amber-400/30 pb-3">
+              <span id="comic-tag" class="text-xs font-bold tracking-widest px-3 py-1 bg-amber-500 text-slate-950 rounded-full font-title">TAVOLA 1 DI 4</span>
+              <span id="comic-location" class="font-magic text-amber-300 text-sm md:text-base"><i class="fa-solid fa-location-dot mr-1"></i> Basilica di San Vitale, Ravenna</span>
+            </div>
+
+            <!-- Comic Visual Scene -->
+            <div class="my-4 grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+              
+              <!-- Left Scene Art / Avatar Illustration -->
+              <div class="md:col-span-5 flex flex-col items-center justify-center p-4 bg-slate-900/80 rounded-2xl border-2 border-amber-400/40 shadow-inner">
+                <div id="comic-illustration" class="w-36 h-36 md:w-44 md:h-44 rounded-full border-4 border-amber-400/80 flex items-center justify-center text-6xl shadow-xl transition-all duration-500 transform hover:scale-105">
+                  🏰
+                </div>
+                <div id="comic-char-name" class="mt-3 font-title text-sm font-bold text-amber-300 tracking-wide text-center">Hermione Granger</div>
+                <div id="comic-char-role" class="text-[11px] text-amber-100/70 font-sans">Prefetta e Studiosa di Storia Magica</div>
+              </div>
+
+              <!-- Right Dialog Speech Bubble -->
+              <div class="md:col-span-7 flex flex-col justify-center">
+                <div class="relative bg-amber-100 text-slate-900 p-5 md:p-6 rounded-2xl shadow-xl border-2 border-amber-400">
+                  <div class="hidden md:block absolute -left-3 top-8 w-0 h-0 border-t-[10px] border-t-transparent border-r-[14px] border-r-amber-100 border-b-[10px] border-b-transparent"></div>
+                  
+                  <div class="flex justify-between items-start mb-2">
+                    <h3 id="comic-title" class="font-title text-base md:text-lg font-bold text-amber-900">Perché Ravenna è così speciale?</h3>
+                    <button onclick="speakElementText('comic-text')" class="text-indigo-800 hover:text-indigo-600 text-sm p-1 ml-2" title="Ascolta questo dialogo">
+                      <i class="fa-solid fa-volume-high"></i>
+                    </button>
+                  </div>
+                  
+                  <p id="comic-text" class="text-sm md:text-base text-slate-800 leading-relaxed font-sans font-medium transition-colors">
+                    "Harry, Ron, guardatevi attorno! La Passaporta ci ha portati a Ravenna nel VI secolo. Quando Roma cadde nel 476, Ravenna divenne capitale perché era protetta da paludi inespugnabili e collegata a Bisanzio (Costantinopoli) attraverso il porto di Classe. L'imperatore Giustiniano volle rendere questa città il gioiello splendente dell'Impero!"
+                  </p>
+                  
+                  <div class="mt-4 pt-3 border-t border-amber-300/60 flex items-center justify-between text-xs text-amber-900/80 font-bold">
+                    <span id="comic-didactic-pill"><i class="fa-solid fa-lightbulb text-amber-600 mr-1"></i> Concetto Chiave: Posizione strategica & Capitale</span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Slide Navigation Buttons -->
+            <div class="flex items-center justify-between pt-3 border-t border-amber-400/30">
+              <button onclick="changeComic(-1)" id="btn-comic-prev" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-amber-300 rounded-xl text-xs font-bold transition flex items-center gap-2 border border-amber-500/40 disabled:opacity-30 disabled:pointer-events-none">
+                <i class="fa-solid fa-chevron-left"></i> Precedente
+              </button>
+              
+              <div class="flex gap-2" id="comic-dots">
+                <span class="w-3 h-3 rounded-full bg-amber-400"></span>
+                <span class="w-3 h-3 rounded-full bg-slate-700"></span>
+                <span class="w-3 h-3 rounded-full bg-slate-700"></span>
+                <span class="w-3 h-3 rounded-full bg-slate-700"></span>
+              </div>
+
+              <button onclick="changeComic(1)" id="btn-comic-next" class="px-4 py-2 bg-amber-500 hover:bg-amber-400 text-slate-950 rounded-xl text-xs font-bold transition flex items-center gap-2 shadow-lg shadow-amber-500/20">
+                Successivo <i class="fa-solid fa-chevron-right"></i>
+              </button>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="mt-5 p-4 rounded-xl bg-amber-900/10 border border-amber-900/20 flex flex-wrap items-center justify-between gap-3">
+          <div class="flex items-center gap-3">
+            <i class="fa-solid fa-circle-check text-green-700 text-xl"></i>
+            <span class="text-xs md:text-sm text-amber-950 font-semibold">Completa tutte le tavole del fumetto per guadagnare <strong>+25 Punti Casa</strong> e il distintivo storico!</span>
+          </div>
+          <button onclick="finishComicStory()" id="btn-claim-comic" class="px-3.5 py-1.5 text-xs font-bold bg-amber-800 hover:bg-amber-900 text-amber-100 rounded-lg transition shadow">
+            Riscuoti Punti
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 2: MOSAIC ATELIER -->
+    <section id="sec-mosaic" class="tab-content hidden">
+      <div class="parchment-card rounded-2xl p-5 md:p-8 shadow-2xl relative">
+        
+        <div class="flex flex-col sm:flex-row justify-between items-center gap-4 mb-8 text-center sm:text-left">
+          <div>
+            <span class="text-xs font-bold text-amber-800 uppercase tracking-widest font-title"><i class="fa-solid fa-sparkles"></i> Laboratorio Magico</span>
+            <h2 class="font-title text-2xl md:text-4xl font-extrabold text-amber-950 mt-1">L'Atelier dei Mosaici & Monumenti</h2>
+            <p class="text-xs md:text-sm text-amber-900/80 mt-1 font-medium">
+              Gira le carte, usa <strong>"Lumos"</strong> per rivelare i segreti e premi l'icona <strong>Audio</strong> per ascoltare la spiegazione parlata.
+            </p>
+          </div>
+          <button onclick="speakText('Benvenuto nell\'Atelier dei Mosaici Bizantini! Qui scoprirai la tecnica millenaria delle tessere dorate e i grandi monumenti di Ravenna come San Vitale e Galla Placidia.')" class="px-3 py-1.5 bg-indigo-700 hover:bg-indigo-600 text-white rounded-xl text-xs font-bold shadow flex items-center gap-1.5 whitespace-nowrap">
+            <i class="fa-solid fa-volume-high"></i> Ascolta Introduzione
+          </button>
+        </div>
+
+        <!-- Grid of Interactive Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="cards-grid">
+          <!-- Populated by JS -->
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 3: MINI GAMES -->
+    <section id="sec-games" class="tab-content hidden">
+      <div class="parchment-card rounded-2xl p-5 md:p-8 shadow-2xl relative space-y-8">
+        
+        <!-- Game Selector Toggle -->
+        <div class="flex flex-wrap justify-between items-center gap-3 border-b-2 border-amber-900/20 pb-4">
+          <div class="flex flex-wrap gap-2">
+            <button onclick="switchMiniGame('recipe')" id="btn-game-recipe" class="px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-amber-800 text-amber-100 shadow transition flex items-center gap-2">
+              <i class="fa-solid fa-mortar-pestle"></i> Gioco A: La Ricetta del Mosaicista
+            </button>
+            <button onclick="switchMiniGame('timeline')" id="btn-game-timeline" class="px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-amber-900/10 text-amber-950 hover:bg-amber-900/20 transition flex items-center gap-2 border border-amber-900/30">
+              <i class="fa-solid fa-clock-rotate-left"></i> Gioco B: Mappa del Tempo Ravennate
+            </button>
+          </div>
+          <button onclick="speakCurrentGameInstructions()" class="px-3 py-1.5 bg-indigo-700 hover:bg-indigo-600 text-white rounded-xl text-xs font-bold flex items-center gap-1.5">
+            <i class="fa-solid fa-volume-high"></i> Ascolta Istruzioni Gioco
+          </button>
+        </div>
+
+        <!-- Mini-Game A: La Ricetta del Mosaicista (Fasi di lavoro) -->
+        <div id="game-recipe-container" class="space-y-4">
+          <div class="text-center max-w-xl mx-auto">
+            <h3 class="font-title text-xl md:text-2xl font-bold text-amber-950">La Ricetta del Maestro Mosaicista</h3>
+            <p id="recipe-instructions-text" class="text-xs sm:text-sm text-amber-900/80 mt-1">
+              Un mosaico bizantino richiedeva grande perizia! Usa le frecce per mettere in <strong>ordine cronologico</strong> le 5 fasi di lavorazione dal primo all'ultimo passaggio.
+            </p>
+          </div>
+
+          <div id="recipe-list" class="space-y-2.5 max-w-2xl mx-auto">
+            <!-- Dynamically generated shiftable items -->
+          </div>
+
+          <div class="flex justify-center gap-3 pt-3">
+            <button onclick="checkRecipeOrder()" class="px-6 py-2.5 bg-amber-600 hover:bg-amber-500 text-slate-950 font-title font-bold text-sm rounded-xl shadow-lg transition active:scale-95 flex items-center gap-2">
+              <i class="fa-solid fa-wand-magic"></i> Verifica l'Incantesimo
+            </button>
+            <button onclick="resetRecipeGame()" class="px-4 py-2.5 bg-amber-900/10 hover:bg-amber-900/20 text-amber-900 font-bold text-xs rounded-xl transition">
+              Mescola Fasi
+            </button>
+          </div>
+          <div id="recipe-feedback" class="text-center text-xs sm:text-sm font-bold min-h-[24px]"></div>
+        </div>
+
+        <!-- Mini-Game B: La Mappa del Tempo (Monumenti & Secoli) -->
+        <div id="game-timeline-container" class="space-y-4 hidden">
+          <div class="text-center max-w-xl mx-auto">
+            <h3 class="font-title text-xl md:text-2xl font-bold text-amber-950">La Mappa del Tempo: I Capolavori di Ravenna</h3>
+            <p id="timeline-instructions-text" class="text-xs sm:text-sm text-amber-900/80 mt-1">
+              Collega ogni monumento con il suo secolo e caratteristica distintiva. Clicca su un elemento della Colonna A e poi sul corrispondente della Colonna B!
+            </p>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-3xl mx-auto">
+            <div class="space-y-3" id="timeline-col-a">
+              <h4 class="font-title text-xs font-bold text-amber-900 uppercase tracking-wider text-center">Monumento</h4>
+            </div>
+            <div class="space-y-3" id="timeline-col-b">
+              <h4 class="font-title text-xs font-bold text-amber-900 uppercase tracking-wider text-center">Caratteristica Chiave</h4>
+            </div>
+          </div>
+
+          <div id="timeline-feedback" class="text-center text-xs sm:text-sm font-bold min-h-[24px]"></div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 4: PRACTICE QUIZ -->
+    <section id="sec-quiz" class="tab-content hidden">
+      <div class="parchment-card rounded-2xl p-5 md:p-8 shadow-2xl relative">
+        
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 border-b-2 border-amber-900/20 pb-4 mb-6">
+          <div>
+            <div class="flex items-center gap-2 text-xs font-bold text-amber-800 uppercase tracking-widest font-title">
+              <i class="fa-solid fa-graduation-cap"></i> Esami G.U.F.O. di Arte e Immagine
+            </div>
+            <h2 class="font-title text-2xl md:text-3xl font-extrabold text-amber-950">Verifica i tuoi Poteri Bizantini</h2>
+          </div>
+          
+          <div class="flex items-center gap-2">
+            <button onclick="speakQuizQuestion()" class="px-3 py-1.5 bg-indigo-700 hover:bg-indigo-600 text-white rounded-xl text-xs font-bold shadow flex items-center gap-1.5 transition">
+              <i class="fa-solid fa-volume-high"></i> Leggi Domanda e Opzioni
+            </button>
+            <div class="text-xs bg-amber-900/10 px-3 py-1.5 rounded-xl border border-amber-900/20 font-bold text-amber-900">
+              Domanda <span id="quiz-current-idx">1</span> di <span id="quiz-total-idx">5</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div id="quiz-container" class="max-w-3xl mx-auto space-y-6">
+          
+          <div class="bg-amber-950 text-amber-100 p-5 md:p-6 rounded-2xl border-2 border-amber-500/50 shadow-xl">
+            <span class="text-xs font-bold uppercase tracking-wider text-amber-400" id="quiz-category">Tecnica & Simbolismo</span>
+            <h3 id="quiz-question-text" class="font-title text-lg md:text-xl font-bold mt-1 text-white">
+              Per quale motivo i maestri bizantini usavano il prezioso fondo oro nei mosaici delle chiese?
+            </h3>
+          </div>
+
+          <div id="quiz-options" class="grid grid-cols-1 gap-3">
+            <!-- Populated dynamically -->
+          </div>
+
+          <!-- Didactic Explanation Box -->
+          <div id="quiz-explanation-box" class="hidden p-4 rounded-xl border-2 transition-all duration-300">
+            <div class="flex items-start justify-between gap-3">
+              <div class="flex items-start gap-3">
+                <i id="quiz-expl-icon" class="fa-solid fa-circle-info text-lg mt-0.5"></i>
+                <div>
+                  <h4 id="quiz-expl-title" class="font-title text-sm font-bold">Spiegazione Didattica:</h4>
+                  <p id="quiz-expl-text" class="text-xs md:text-sm mt-1 leading-relaxed font-medium">Testo esplicativo</p>
+                </div>
+              </div>
+              <button onclick="speakElementText('quiz-expl-text')" class="text-indigo-800 hover:text-indigo-600 text-sm p-1 ml-2" title="Ascolta spiegazione">
+                <i class="fa-solid fa-volume-high"></i>
+              </button>
+            </div>
+            <div class="mt-4 flex justify-end">
+              <button id="btn-next-quiz" onclick="nextQuizQuestion()" class="px-5 py-2 bg-amber-600 hover:bg-amber-500 text-slate-950 font-title font-bold text-xs rounded-xl shadow transition">
+                Prossima Domanda <i class="fa-solid fa-arrow-right ml-1"></i>
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Quiz Results Final Screen -->
+        <div id="quiz-result-screen" class="hidden text-center max-w-lg mx-auto py-8 space-y-4">
+          <div class="w-20 h-20 rounded-full bg-amber-500/20 border-4 border-amber-500 text-amber-600 mx-auto flex items-center justify-center text-4xl shadow-lg">
+            <i class="fa-solid fa-award"></i>
+          </div>
+          <h3 class="font-title text-2xl font-bold text-amber-950">Esame G.U.F.O. Completato!</h3>
+          <p id="quiz-result-score" class="text-base text-amber-900 font-semibold">Hai ottenuto 5 su 5 punti!</p>
+          <p id="quiz-result-feedback" class="text-xs sm:text-sm text-amber-800">Sei degno di dipingere la corte dell'Imperatore Giustiniano in persona!</p>
+          <div class="pt-2 flex justify-center gap-3">
+            <button onclick="restartQuiz()" class="px-5 py-2.5 bg-amber-800 text-amber-100 font-title font-bold text-xs rounded-xl hover:bg-amber-900 shadow">
+              Riprova il Quiz
+            </button>
+            <button onclick="speakElementText('quiz-result-feedback')" class="px-4 py-2.5 bg-indigo-700 text-white font-bold text-xs rounded-xl hover:bg-indigo-600 shadow">
+              <i class="fa-solid fa-volume-high mr-1"></i> Ascolta Esito
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 5: BOSS DUEL (Harry vs Lord Voldemort) -->
+    <section id="sec-boss" class="tab-content hidden">
+      <div class="bg-gradient-to-b from-slate-950 via-emerald-950/40 to-slate-950 rounded-2xl p-5 md:p-8 text-white border-4 border-emerald-600/70 shadow-2xl relative overflow-hidden">
+        
+        <!-- Background Dark Mark Glow -->
+        <div class="absolute -right-16 -top-16 opacity-10 text-[220px] pointer-events-none select-none text-emerald-400">
+          <i class="fa-solid fa-skull"></i>
+        </div>
+
+        <div class="relative z-10 flex flex-col md:flex-row justify-between items-center gap-4 border-b border-emerald-500/30 pb-4 mb-6">
+          <div>
+            <div class="flex items-center gap-2 text-xs font-bold text-emerald-400 uppercase tracking-widest font-title">
+              <i class="fa-solid fa-skull-crossbones text-emerald-300"></i> Sfida Finale del Marchio Nero
+            </div>
+            <h2 class="font-title text-2xl md:text-3xl font-extrabold text-amber-300">Duello di Incantesimi: Harry Potter vs Lord Voldemort</h2>
+          </div>
+
+          <!-- Timer with Extra Time Indicator for BES -->
+          <div class="flex items-center gap-3 bg-slate-900/90 border-2 border-emerald-500/60 px-5 py-2 rounded-2xl shadow-lg">
+            <i class="fa-solid fa-hourglass-half text-amber-400 text-xl animate-spin"></i>
+            <div>
+              <div class="text-[10px] text-emerald-300 font-bold uppercase tracking-wider flex items-center gap-1">
+                <span>Tempo Rimasto</span>
+                <span id="extra-time-tag" class="hidden text-[9px] bg-amber-500 text-slate-950 px-1 rounded font-bold">+BES</span>
+              </div>
+              <div id="duel-timer" class="font-title text-2xl font-black text-amber-400">60s</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Duel Arena: Combatants & HP Bars -->
+        <div class="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-6 items-center mb-6">
+          
+          <!-- Harry Potter (Player) -->
+          <div id="harry-card" class="bg-slate-900/90 border-2 border-amber-500/60 rounded-2xl p-4 shadow-xl transition-all duration-300">
+            <div class="flex items-center gap-4">
+              <div class="w-16 h-16 rounded-full bg-gradient-to-tr from-amber-600 via-amber-400 to-yellow-200 p-0.5 shadow-md flex items-center justify-center text-3xl">
+                <span>⚡</span>
+              </div>
+              <div class="flex-1">
+                <div class="flex justify-between items-baseline">
+                  <h3 class="font-title font-bold text-amber-300 text-base">Harry Potter</h3>
+                  <span id="harry-hp-text" class="text-xs font-mono font-bold text-amber-200">100 / 100 HP</span>
+                </div>
+                <!-- Health Bar -->
+                <div class="w-full bg-slate-800 h-3.5 rounded-full overflow-hidden mt-1.5 border border-amber-500/40">
+                  <div id="harry-hp-bar" class="bg-gradient-to-r from-amber-500 to-yellow-300 h-full rounded-full transition-all duration-500" style="width: 100%;"></div>
+                </div>
+                <div class="text-[11px] text-amber-200/70 mt-1">Arma: Tessere Dorate di Ravenna & Incantesimo Expelliarmus</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Lord Voldemort (Boss) -->
+          <div id="voldemort-card" class="bg-slate-900/90 border-2 border-emerald-500/60 rounded-2xl p-4 shadow-xl transition-all duration-300">
+            <div class="flex items-center gap-4">
+              <div class="w-16 h-16 rounded-full bg-gradient-to-tr from-emerald-950 via-slate-800 to-emerald-400 p-0.5 shadow-md flex items-center justify-center text-3xl border border-emerald-400/50">
+                <span>🐍</span>
+              </div>
+              <div class="flex-1">
+                <div class="flex justify-between items-baseline">
+                  <h3 class="font-title font-bold text-emerald-400 text-base">Lord Voldemort (Il Signore Oscuro)</h3>
+                  <span id="boss-hp-text" class="text-xs font-mono font-bold text-emerald-300">100 / 100 HP</span>
+                </div>
+                <!-- Health Bar -->
+                <div class="w-full bg-slate-800 h-3.5 rounded-full overflow-hidden mt-1.5 border border-emerald-500/40">
+                  <div id="boss-hp-bar" class="bg-gradient-to-r from-emerald-600 via-green-500 to-emerald-300 h-full rounded-full transition-all duration-500" style="width: 100%;"></div>
+                </div>
+                <div class="text-[11px] text-emerald-300/70 mt-1">Arma: Bacchetta di Sambuco & Maledizione dell'Ombra Verde</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Combat FX Visual Stage (Magic Clash Animation) -->
+        <div id="duel-stage" class="relative h-20 bg-slate-950/80 border border-amber-500/30 rounded-xl mb-6 flex items-center justify-center overflow-hidden">
+          <div id="spell-beam-harry" class="absolute left-0 h-2.5 bg-gradient-to-r from-amber-400 via-yellow-300 to-white rounded-full transition-all duration-300 opacity-0 shadow-[0_0_20px_#facc15]" style="width: 0%;"></div>
+          <div id="spell-beam-boss" class="absolute right-0 h-2.5 bg-gradient-to-l from-emerald-500 via-green-400 to-white rounded-full transition-all duration-300 opacity-0 shadow-[0_0_20px_#10b981]" style="width: 0%;"></div>
+          <div id="duel-status-text" class="font-magic text-sm sm:text-base text-amber-200 tracking-wider text-center z-10 px-4">
+            Lord Voldemort vuole distruggere l'oro di Bisanzio! Clicca per iniziare il duello!
+          </div>
+        </div>
+
+        <!-- Boss Question Interactive Board -->
+        <div id="boss-interaction-area" class="relative z-10">
+          
+          <!-- Start Button Overlay -->
+          <div id="boss-start-prompt" class="text-center py-6">
+            <p class="text-sm text-slate-300 max-w-lg mx-auto mb-4 leading-relaxed">
+              "L'oro eterno delle chiese bizantine non ti salverà, Potter!" <br>
+              Rispondi con rapidità alle domande sull'arte ravennate per scatenare il raggio dorato e sconfiggere <strong>Lord Voldemort</strong> prima che il tempo scada!
+            </p>
+            <button onclick="startDuel()" class="px-8 py-3.5 bg-gradient-to-r from-emerald-600 via-amber-500 to-yellow-400 text-slate-950 font-title font-black text-sm md:text-base rounded-2xl shadow-xl hover:scale-105 active:scale-95 transition-all">
+              <i class="fa-solid fa-wand-magic-sparkles mr-2"></i> INIZIA IL DUELLO CONTRO VOLDEMORT!
+            </button>
+          </div>
+
+          <!-- Dynamic Rapid-Fire Question Box -->
+          <div id="boss-question-box" class="hidden space-y-4">
+            <div class="bg-slate-900/90 border border-emerald-400/50 p-4 rounded-xl text-center relative shadow-lg">
+              <span class="text-[11px] font-bold text-emerald-400 uppercase tracking-widest">Attacco Lampo di Voldemort</span>
+              <button onclick="speakBossQuestion()" class="absolute right-3 top-3 text-amber-300 hover:text-white text-xs bg-slate-800 p-1.5 rounded-lg border border-amber-400/30" title="Ascolta domanda lampo">
+                <i class="fa-solid fa-volume-high"></i>
+              </button>
+              <h4 id="boss-question-prompt" class="font-title text-base sm:text-lg font-bold text-white mt-1">
+                Cosa significa il termine bizantino "IERATICO"?
+              </h4>
+            </div>
+
+            <div id="boss-answers-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <!-- Rapid options injected -->
+            </div>
+          </div>
+
+          <!-- End of Duel Result Screen -->
+          <div id="boss-end-screen" class="hidden text-center py-6 space-y-4">
+            <div id="boss-end-icon" class="text-5xl">🏆</div>
+            <h3 id="boss-end-title" class="font-title text-2xl font-bold text-yellow-300">VITTORIA SCHIACCIANTE!</h3>
+            <p id="boss-end-desc" class="text-sm text-slate-200 max-w-md mx-auto">
+              Lord Voldemort è stato respinto nell'ombra! I mosaici di Giustiniano e Teodora risplendono di nuovo sicuri a Ravenna! <strong>+100 Punti Casa assegnati!</strong>
+            </p>
+            <button onclick="startDuel()" class="px-6 py-2.5 bg-amber-500 hover:bg-amber-400 text-slate-950 font-title font-bold text-xs rounded-xl shadow transition">
+              Affronta di Nuovo Voldemort
+            </button>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="relative z-10 border-t border-amber-500/20 bg-slate-950/80 text-amber-200/70 py-4 px-4 text-center text-xs">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-3">
+      <div class="flex items-center gap-2">
+        <i class="fa-solid fa-chalkboard-user text-amber-400 text-sm"></i>
+        <span>Ideato e creato dal <strong>Prof. Marco Cigolotti</strong> • Arte e Immagine (Scuola Secondaria di 1° Grado)</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <i class="fa-solid fa-landmark text-amber-400"></i>
+        <span>Ravenna & l'Arte Bizantina tra V e VI Secolo d.C. • Supporto BES/DSA</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    /* ==========================================================================
+       1. WEB AUDIO API SYNTHESIZER (ZERO EXTERNAL SOUND ASSET DEPENDENCIES)
+       ========================================================================== */
+    class MagicAudioSynth {
+      constructor() {
+        this.ctx = null;
+        this.enabled = true;
+      }
+
+      initContext() {
+        if (!this.ctx) {
+          const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+          if (AudioContextClass) {
+            this.ctx = new AudioContextClass();
+          }
+        }
+        if (this.ctx && this.ctx.state === 'suspended') {
+          this.ctx.resume();
+        }
+      }
+
+      playTone(freq, type = 'sine', duration = 0.2, gainVal = 0.15) {
+        if (!this.enabled) return;
+        this.initContext();
+        if (!this.ctx) return;
+
+        try {
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+
+          osc.type = type;
+          osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
+
+          gain.gain.setValueAtTime(gainVal, this.ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.0001, this.ctx.currentTime + duration);
+
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+
+          osc.start();
+          osc.stop(this.ctx.currentTime + duration);
+        } catch (e) {
+          console.warn("Audio error:", e);
+        }
+      }
+
+      playSpell() {
+        if (!this.enabled) return;
+        this.playTone(523.25, 'triangle', 0.15, 0.12);
+        setTimeout(() => this.playTone(659.25, 'sine', 0.2, 0.15), 60);
+        setTimeout(() => this.playTone(783.99, 'sine', 0.25, 0.12), 120);
+      }
+
+      playCorrect() {
+        if (!this.enabled) return;
+        this.playTone(587.33, 'triangle', 0.15, 0.15);
+        setTimeout(() => this.playTone(880.00, 'sine', 0.35, 0.18), 110);
+      }
+
+      playWrong() {
+        if (!this.enabled) return;
+        this.playTone(220.00, 'sawtooth', 0.25, 0.15);
+        setTimeout(() => this.playTone(185.00, 'sawtooth', 0.35, 0.12), 120);
+      }
+
+      playFanfare() {
+        if (!this.enabled) return;
+        const notes = [523.25, 659.25, 783.99, 1046.50];
+        notes.forEach((n, idx) => {
+          setTimeout(() => this.playTone(n, 'triangle', 0.3, 0.18), idx * 100);
+        });
+      }
+
+      playHit() {
+        if (!this.enabled) return;
+        this.playTone(140, 'square', 0.2, 0.2);
+      }
+    }
+
+    const sound = new MagicAudioSynth();
+
+    function toggleAudio() {
+      sound.enabled = !sound.enabled;
+      const btn = document.getElementById('sound-toggle');
+      if (btn) {
+        btn.innerHTML = sound.enabled 
+          ? '<i class="fa-solid fa-volume-high"></i>' 
+          : '<i class="fa-solid fa-volume-xmark text-slate-500"></i>';
+      }
+    }
+
+    /* ==========================================================================
+       2. TEXT-TO-SPEECH (TTS) ENHANCED NATIVE SPEECH SYNTHESIS ENGINE
+       ========================================================================== */
+    class TTSSpeechManager {
+      constructor() {
+        this.synth = window.speechSynthesis;
+        this.currentUtterance = null;
+        this.speed = 1.0;
+        this.pitch = 1.02; // Warm and natural cadence
+        this.italianVoices = [];
+        this.selectedVoice = null;
+        this.activeHighlightElement = null;
+        this.initVoices();
+      }
+
+      initVoices() {
+        if (!this.synth) return;
+
+        const populate = () => {
+          const allVoices = this.synth.getVoices();
+          // Filter Italian voices
+          this.italianVoices = allVoices.filter(v => 
+            v.lang && (v.lang.toLowerCase().startsWith('it') || v.lang.toLowerCase().includes('it-it'))
+          );
+
+          // Quality heuristics for more natural cadence
+          const naturalKeywords = ['natural', 'neural', 'google', 'online', 'enhanced', 'premium', 'alice', 'federica', 'luca', 'siri', 'elsa', 'isabella', 'cosimo'];
+          
+          this.italianVoices.sort((a, b) => {
+            const aName = (a.name + ' ' + a.voiceURI).toLowerCase();
+            const bName = (b.name + ' ' + b.voiceURI).toLowerCase();
+            const aScore = naturalKeywords.reduce((acc, kw) => acc + (aName.includes(kw) ? 3 : 0), 0) + (a.localService ? 0 : 2);
+            const bScore = naturalKeywords.reduce((acc, kw) => acc + (bName.includes(kw) ? 3 : 0), 0) + (b.localService ? 0 : 2);
+            return bScore - aScore;
+          });
+
+          if (this.italianVoices.length > 0 && !this.selectedVoice) {
+            this.selectedVoice = this.italianVoices[0];
+          }
+
+          this.updateDropdowns();
+          const statusLabel = document.getElementById('tts-status-text');
+          if (statusLabel) {
+            statusLabel.textContent = this.selectedVoice 
+              ? `Voce: ${this.selectedVoice.name.replace(/Microsoft|Google|Apple/g, '').trim()} pronta` 
+              : "Pronto all'ascolto";
+          }
+        };
+
+        populate();
+        if (this.synth.onvoiceschanged !== undefined) {
+          this.synth.onvoiceschanged = populate;
+        }
+      }
+
+      updateDropdowns() {
+        const selects = [
+          document.getElementById('tts-voice-select'),
+          document.getElementById('tts-voice-drawer-select')
+        ];
+
+        selects.forEach(sel => {
+          if (!sel) return;
+          sel.innerHTML = '';
+
+          if (this.italianVoices.length === 0) {
+            const opt = document.createElement('option');
+            opt.value = "";
+            opt.textContent = "Voce Italiana Predefinita";
+            sel.appendChild(opt);
+            return;
+          }
+
+          this.italianVoices.forEach((v) => {
+            const opt = document.createElement('option');
+            opt.value = v.voiceURI || v.name;
+            const isHQ = /natural|neural|google|online|enhanced|premium|alice|federica|luca/i.test(v.name);
+            const labelHQ = isHQ ? " ★ Naturale HQ" : "";
+            opt.textContent = `${v.name.replace(/Italian|Italy|Microsoft|Google/gi, '').trim()}${labelHQ}`;
+            if (this.selectedVoice && (this.selectedVoice.voiceURI === v.voiceURI || this.selectedVoice.name === v.name)) {
+              opt.selected = true;
+            }
+            sel.appendChild(opt);
+          });
+        });
+      }
+
+      setVoiceByURI(uri) {
+        const found = this.italianVoices.find(v => (v.voiceURI === uri || v.name === uri));
+        if (found) {
+          this.selectedVoice = found;
+          const statusLabel = document.getElementById('tts-status-text');
+          if (statusLabel) {
+            statusLabel.textContent = `Voce: ${found.name.replace(/Microsoft|Google|Apple/g, '').trim()}`;
+          }
+        }
+      }
+
+      speak(text, targetElement = null) {
+        if (!this.synth) {
+          console.warn("Speech Synthesis non supportata da questo browser.");
+          return;
+        }
+        this.stop();
+
+        const statusLabel = document.getElementById('tts-status-text');
+        if (statusLabel) statusLabel.textContent = "In riproduzione vocale...";
+
+        this.currentUtterance = new SpeechSynthesisUtterance(text);
+        this.currentUtterance.lang = 'it-IT';
+
+        if (this.selectedVoice) {
+          this.currentUtterance.voice = this.selectedVoice;
+        }
+        this.currentUtterance.rate = this.speed;
+        this.currentUtterance.pitch = this.pitch;
+
+        if (targetElement) {
+          this.activeHighlightElement = targetElement;
+          targetElement.classList.add('tts-reading-highlight');
+        }
+
+        this.currentUtterance.onend = () => {
+          this.clearHighlight();
+          if (statusLabel) statusLabel.textContent = "Lettura completata";
+        };
+
+        this.currentUtterance.onerror = () => {
+          this.clearHighlight();
+          if (statusLabel) statusLabel.textContent = "Pronto all'ascolto";
+        };
+
+        this.synth.speak(this.currentUtterance);
+      }
+
+      pause() {
+        if (this.synth && this.synth.speaking && !this.synth.paused) {
+          this.synth.pause();
+          const statusLabel = document.getElementById('tts-status-text');
+          if (statusLabel) statusLabel.textContent = "In pausa";
+        } else if (this.synth && this.synth.paused) {
+          this.synth.resume();
+          const statusLabel = document.getElementById('tts-status-text');
+          if (statusLabel) statusLabel.textContent = "In riproduzione...";
+        }
+      }
+
+      stop() {
+        if (this.synth) {
+          this.synth.cancel();
+          this.clearHighlight();
+          const statusLabel = document.getElementById('tts-status-text');
+          if (statusLabel) statusLabel.textContent = "Pronto all'ascolto";
+        }
+      }
+
+      clearHighlight() {
+        if (this.activeHighlightElement) {
+          this.activeHighlightElement.classList.remove('tts-reading-highlight');
+          this.activeHighlightElement = null;
+        }
+        document.querySelectorAll('.tts-reading-highlight').forEach(el => el.classList.remove('tts-reading-highlight'));
+      }
+    }
+
+    const tts = new TTSSpeechManager();
+
+    function changeTTSVoice(val) {
+      tts.setVoiceByURI(val);
+      const selA = document.getElementById('tts-voice-select');
+      const selB = document.getElementById('tts-voice-drawer-select');
+      if (selA && selA.value !== val) selA.value = val;
+      if (selB && selB.value !== val) selB.value = val;
+    }
+
+    function setPitch(val) {
+      tts.pitch = parseFloat(val);
+      testCurrentVoice();
+    }
+
+    function testCurrentVoice() {
+      tts.speak("Salute a te! Questa è la voce per esplorare i mosaici bizantini di Ravenna, ideata per l'insegnamento di Arte e Immagine dal Professor Marco Cigolotti.");
+    }
+
+    function updateTTSSpeed(val) {
+      tts.speed = parseFloat(val);
+    }
+
+    function pauseResumeTTS() {
+      tts.pause();
+    }
+
+    function stopTTS() {
+      tts.stop();
+    }
+
+    function speakText(text, targetEl = null) {
+      tts.speak(text, targetEl);
+    }
+
+    function speakElementText(elId) {
+      const el = document.getElementById(elId);
+      if (el) {
+        tts.speak(el.innerText, el);
+      }
+    }
+
+    function speakCurrentVignette() {
+      const current = comicData[currentComicIndex];
+      const textToRead = `${current.title}. ${current.charName} dice: ${current.dialogue} ${current.pill}`;
+      const targetEl = document.getElementById('comic-text');
+      tts.speak(textToRead, targetEl);
+    }
+
+    function speakQuizQuestion() {
+      const q = quizQuestions[currentQuizIndex];
+      let fullText = `Domanda numero ${currentQuizIndex + 1}. ${q.question}. Ecco le opzioni: `;
+      q.options.forEach((opt) => {
+        fullText += `${opt.text}. `;
+      });
+      const qEl = document.getElementById('quiz-question-text');
+      tts.speak(fullText, qEl);
+    }
+
+    function speakCurrentGameInstructions() {
+      if (currentMiniGame === 'recipe') {
+        const text = document.getElementById('recipe-instructions-text').innerText;
+        tts.speak(`Gioco A: La ricetta del mosaicista. ${text}`, document.getElementById('recipe-instructions-text'));
+      } else {
+        const text = document.getElementById('timeline-instructions-text').innerText;
+        tts.speak(`Gioco B: La mappa del tempo ravennate. ${text}`, document.getElementById('timeline-instructions-text'));
+      }
+    }
+
+    function speakBossQuestion() {
+      if (currentRapidQ) {
+        tts.speak(`Voldemort attacca! ${currentRapidQ.q}`, document.getElementById('boss-question-prompt'));
+      }
+    }
+
+    function readCurrentSection() {
+      const activeTabBtn = document.querySelector('.tab-btn.active');
+      const activeId = activeTabBtn ? activeTabBtn.id.replace('tab-', '') : 'comic';
+      
+      if (activeId === 'comic') {
+        speakCurrentVignette();
+      } else if (activeId === 'mosaic') {
+        tts.speak("Atelier dei Mosaici Bizantini. Esplora le carte: Tecnica del mosaico, Basilica di San Vitale, Mausoleo di Galla Placidia, Sant'Apollinare Nuovo, Ieraticità e Simbolismo, Porto di Classe e le paludi.");
+      } else if (activeId === 'games') {
+        speakCurrentGameInstructions();
+      } else if (activeId === 'quiz') {
+        speakQuizQuestion();
+      } else if (activeId === 'boss') {
+        tts.speak("Duello Magico a tempo contro Lord Voldemort! Rispondi tempestivamente alle domande sulle tessere e l'arte di Bisanzio per respingere il Signore Oscuro prima che il tempo scada.");
+      }
+    }
+
+    /* ==========================================================================
+       3. STRUMENTI ACCESSIBILITÀ & INCLUSIONE (BES / DSA)
+       ========================================================================== */
+    let currentFontSizeRem = 1.0;
+    let isRulerActive = false;
+    let isFocusMaskActive = false;
+    let extraDuelTimeEnabled = false;
+
+    function toggleAccessibilityModal() {
+      const drawer = document.getElementById('accessibility-drawer');
+      if (drawer) {
+        drawer.classList.toggle('translate-x-full');
+      }
+    }
+
+    function setFontFamily(type) {
+      if (type === 'lexend') {
+        document.documentElement.style.setProperty('--app-font-family', "'Lexend', sans-serif");
+        document.documentElement.style.setProperty('--app-font-title', "'Lexend', sans-serif");
+        document.getElementById('btn-font-lexend').classList.add('bg-amber-600', 'text-slate-950');
+        document.getElementById('btn-font-standard').classList.remove('bg-amber-600', 'text-slate-950');
+      } else {
+        document.documentElement.style.setProperty('--app-font-family', "'Inter', sans-serif");
+        document.documentElement.style.setProperty('--app-font-title', "'Cinzel', serif");
+        document.getElementById('btn-font-standard').classList.add('bg-amber-600', 'text-slate-950');
+        document.getElementById('btn-font-lexend').classList.remove('bg-amber-600', 'text-slate-950');
+      }
+    }
+
+    function adjustFontSize(delta) {
+      currentFontSizeRem = Math.max(0.85, Math.min(1.4, currentFontSizeRem + delta));
+      document.documentElement.style.setProperty('--app-font-scale', `${currentFontSizeRem}rem`);
+      document.getElementById('font-size-label').textContent = `${Math.round(currentFontSizeRem * 100)}%`;
+    }
+
+    function resetFontSize() {
+      currentFontSizeRem = 1.0;
+      document.documentElement.style.setProperty('--app-font-scale', '1rem');
+      document.getElementById('font-size-label').textContent = '100%';
+    }
+
+    function setLineHeight(val) {
+      document.documentElement.style.setProperty('--app-line-height', val);
+      document.getElementById('line-height-label').textContent = val;
+    }
+
+    function setLetterSpacing(val) {
+      document.documentElement.style.setProperty('--app-letter-spacing', val);
+      const label = val === 'normal' ? 'Normale' : (val === '0.08em' ? '+ Ampia' : '++ Massima');
+      document.getElementById('letter-spacing-label').textContent = label;
+    }
+
+    function setTheme(mode) {
+      document.body.classList.remove('theme-high-contrast-dark', 'theme-high-contrast-light', 'theme-cream');
+      if (mode === 'high-dark') {
+        document.body.classList.add('theme-high-contrast-dark');
+      } else if (mode === 'high-light') {
+        document.body.classList.add('theme-high-contrast-light');
+      } else if (mode === 'cream') {
+        document.body.classList.add('theme-cream');
+      }
+    }
+
+    /* Reading Ruler */
+    function toggleReadingRuler() {
+      isRulerActive = !isRulerActive;
+      const ruler = document.getElementById('reading-ruler');
+      const btn = document.getElementById('btn-toggle-ruler');
+      if (isRulerActive) {
+        ruler.style.display = 'block';
+        btn.classList.add('bg-amber-600', 'text-slate-950');
+      } else {
+        ruler.style.display = 'none';
+        btn.classList.remove('bg-amber-600', 'text-slate-950');
+      }
+    }
+
+    /* Reading Focus Mask */
+    function toggleFocusMask() {
+      isFocusMaskActive = !isFocusMaskActive;
+      const maskTop = document.getElementById('focus-mask-top');
+      const maskBottom = document.getElementById('focus-mask-bottom');
+      const btn = document.getElementById('btn-toggle-mask');
+      if (isFocusMaskActive) {
+        maskTop.style.display = 'block';
+        maskBottom.style.display = 'block';
+        btn.classList.add('bg-amber-600', 'text-slate-950');
+      } else {
+        maskTop.style.display = 'none';
+        maskBottom.style.display = 'none';
+        btn.classList.remove('bg-amber-600', 'text-slate-950');
+      }
+    }
+
+    /* Track Cursor/Touch for Ruler & Focus Mask */
+    window.addEventListener('mousemove', (e) => {
+      const y = e.clientY;
+      if (isRulerActive) {
+        const ruler = document.getElementById('reading-ruler');
+        ruler.style.top = `${y}px`;
+      }
+      if (isFocusMaskActive) {
+        const maskTop = document.getElementById('focus-mask-top');
+        const maskBottom = document.getElementById('focus-mask-bottom');
+        const apertureHeight = 110;
+        maskTop.style.height = `${Math.max(0, y - apertureHeight / 2)}px`;
+        maskBottom.style.height = `${Math.max(0, window.innerHeight - (y + apertureHeight / 2))}px`;
+      }
+    });
+
+    window.addEventListener('touchmove', (e) => {
+      if (!e.touches[0]) return;
+      const y = e.touches[0].clientY;
+      if (isRulerActive) {
+        const ruler = document.getElementById('reading-ruler');
+        ruler.style.top = `${y}px`;
+      }
+      if (isFocusMaskActive) {
+        const maskTop = document.getElementById('focus-mask-top');
+        const maskBottom = document.getElementById('focus-mask-bottom');
+        const apertureHeight = 110;
+        maskTop.style.height = `${Math.max(0, y - apertureHeight / 2)}px`;
+        maskBottom.style.height = `${Math.max(0, window.innerHeight - (y + apertureHeight / 2))}px`;
+      }
+    });
+
+    function toggleExtraTime(val) {
+      extraDuelTimeEnabled = val;
+      const tag = document.getElementById('extra-time-tag');
+      if (val) {
+        tag.classList.remove('hidden');
+        document.getElementById('duel-timer').textContent = "90s";
+      } else {
+        tag.classList.add('hidden');
+        document.getElementById('duel-timer').textContent = "60s";
+      }
+    }
+
+    function toggleReducedMotion(val) {
+      if (val) {
+        document.body.classList.add('reduced-motion');
+      } else {
+        document.body.classList.remove('reduced-motion');
+      }
+    }
+
+    function resetAllAccessibility() {
+      resetFontSize();
+      setFontFamily('standard');
+      setLineHeight('1.6');
+      setLetterSpacing('normal');
+      setTheme('default');
+      if (isRulerActive) toggleReadingRuler();
+      if (isFocusMaskActive) toggleFocusMask();
+      const chkTime = document.getElementById('chk-extra-time');
+      if (chkTime) chkTime.checked = false;
+      toggleExtraTime(false);
+      const chkMotion = document.getElementById('chk-reduce-motion');
+      if (chkMotion) chkMotion.checked = false;
+      toggleReducedMotion(false);
+    }
+
+    /* ==========================================================================
+       4. GAMIFICATION & NAVIGATION
+       ========================================================================== */
+    let housePoints = 100;
+    const badges = { story: false, mosaic: false, boss: false };
+
+    function addHousePoints(pts) {
+      housePoints += pts;
+      const badgePill = document.getElementById('house-points');
+      if (badgePill) {
+        badgePill.textContent = housePoints;
+        badgePill.classList.add('scale-125', 'text-yellow-300');
+        setTimeout(() => badgePill.classList.remove('scale-125', 'text-yellow-300'), 400);
+      }
+    }
+
+    function unlockBadge(type) {
+      if (!badges[type]) {
+        badges[type] = true;
+        const el = document.getElementById(`badge-${type}`);
+        if (el) {
+          el.classList.remove('opacity-30');
+          el.classList.add('opacity-100', 'bg-amber-400', 'text-slate-950', 'font-bold');
+        }
+        sound.playFanfare();
+      }
+    }
+
+    function switchTab(tabId) {
+      stopTTS();
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('bg-amber-500', 'text-slate-950', 'font-bold', 'shadow-md', 'shadow-amber-500/20');
+        btn.classList.add('text-amber-200');
+      });
+      document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
+
+      const activeBtn = document.getElementById(`tab-${tabId}`);
+      if (activeBtn) {
+        activeBtn.classList.add('bg-amber-500', 'text-slate-950', 'font-bold', 'shadow-md', 'shadow-amber-500/20');
+        activeBtn.classList.remove('text-amber-200');
+      }
+      const activeContent = document.getElementById(`sec-${tabId}`);
+      if (activeContent) {
+        activeContent.classList.remove('hidden');
+      }
+    }
+
+    function initFloatingParticles() {
+      const container = document.getElementById('sparkles-container');
+      if (!container) return;
+      for (let i = 0; i < 20; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        const size = Math.random() * 4 + 2;
+        particle.style.width = `${size}px`;
+        particle.style.height = `${size}px`;
+        particle.style.left = `${Math.random() * 100}vw`;
+        particle.style.animationDuration = `${6 + Math.random() * 8}s`;
+        particle.style.animationDelay = `${Math.random() * 5}s`;
+        particle.style.opacity = (Math.random() * 0.7 + 0.3).toString();
+        container.appendChild(particle);
+      }
+    }
+
+    /* ==========================================================================
+       5. SEZIONE 1: COMIC STORY
+       ========================================================================== */
+    const comicData = [
+      {
+        tag: "TAVOLA 1 DI 4",
+        location: "Basilica di San Vitale, Ravenna",
+        charName: "Hermione Granger",
+        charRole: "Prefetta e Studiosa di Storia Magica",
+        emoji: "🏰",
+        title: "L'Arrivo a Ravenna: Capitale e Rifugio!",
+        dialogue: "\"Harry, Ron, guardatevi attorno! La Passaporta ci ha teletrasportati a Ravenna nel VI secolo. Quando l'Impero Romano d'Occidente crollò nel 476 d.C., Ravenna divenne la città ideale per governare: era difesa da paludi impraticabili per i nemici ed era dotata dell'immenso porto militare e commerciale di Classe, collegato direttamente a Bisanzio (Costantinopoli)!\"",
+        pill: "Concetto Chiave: Difesa naturale & Porto di Classe"
+      },
+      {
+        tag: "TAVOLA 2 DI 4",
+        location: "Abside di San Vitale (Luce divina)",
+        charName: "Harry Potter",
+        charRole: "Cercatore e Apprendista d'Arte",
+        emoji: "✨",
+        title: "Il Mistero della Luce e dell'Oro!",
+        dialogue: "\"Hermione, osserva le pareti! Non sono dipinte con normale pittura ad affresco. Sono milioni di tessere di pasta vitrea e vera foglia d'oro! Ma guardate da vicino: le tessere non sono tutte piatte, sono state inserite nella malta leggermente inclinate! Quando la luce delle candele le colpisce, il muro sembra vibrare e respirare di luce soprannaturale, come per magia!\"",
+        pill: "Concetto Chiave: Tessere inclinate & Rifrazione della luce"
+      },
+      {
+        tag: "TAVOLA 3 DI 4",
+        location: "Corteo di Giustiniano e Teodora",
+        charName: "Ron Weasley",
+        charRole: "Stupefatto dai Mosaici Imperiali",
+        emoji: "👑",
+        title: "Ieraticità: Nessuna ombra, solo Spirito!",
+        dialogue: "\"Per la barba di Merlino! Guardate l'Imperatore Giustiniano e l'Imperatrice Teodora. Hanno entrambi l'aureola dorata come i santi, vestiti sontuosi di porpora e perle, ma i loro piedi sembrano fluttuare senza toccare terra! Non ci sono ombre sul pavimento, e i loro corpi sono rigidi e frontali. Perché non li hanno disegnati realistici come i Greci o i Romani?\"",
+        pill: "Concetto Chiave: Ieraticità, Bidimensionalità & Isocefalia"
+      },
+      {
+        tag: "TAVOLA 4 DI 4",
+        location: "Mausoleo di Galla Placidia",
+        charName: "Hermione Granger",
+        charRole: "Risolve il Mistero Bizantino",
+        emoji: "🌌",
+        title: "La Volta Stellata e il Significato Sacro",
+        dialogue: "\"Esatto, Ron! Nell'arte bizantina l'obiettivo non è copiare la natura o il corpo umano terreno, ma mostrare il regno divino e l'autorità imperiale eterna. Qui a Galla Placidia la volta a botte blu cobalto è cosparsa da centinaia di stelle d'oro che ruotano attorno alla Croce. E la luce entra da lastre di alabastro, creando una penombra dorata che trasporta l'anima direttamente in Paradiso!\"",
+        pill: "Concetto Chiave: Simbolismo spirituale & Luce trasfigurata"
+      }
+    ];
+
+    let currentComicIndex = 0;
+
+    function renderComic() {
+      const item = comicData[currentComicIndex];
+      document.getElementById('comic-tag').textContent = item.tag;
+      document.getElementById('comic-location').innerHTML = `<i class="fa-solid fa-location-dot mr-1"></i> ${item.location}`;
+      document.getElementById('comic-char-name').textContent = item.charName;
+      document.getElementById('comic-char-role').textContent = item.charRole;
+      document.getElementById('comic-title').textContent = item.title;
+      document.getElementById('comic-text').textContent = item.dialogue;
+      document.getElementById('comic-didactic-pill').innerHTML = `<i class="fa-solid fa-lightbulb text-amber-600 mr-1"></i> ${item.pill}`;
+
+      document.getElementById('comic-illustration').textContent = item.emoji;
+
+      const dotsContainer = document.getElementById('comic-dots');
+      dotsContainer.innerHTML = '';
+      comicData.forEach((_, idx) => {
+        const dot = document.createElement('span');
+        dot.className = `w-3 h-3 rounded-full transition-all ${idx === currentComicIndex ? 'bg-amber-400 scale-125' : 'bg-slate-700'}`;
+        dotsContainer.appendChild(dot);
+      });
+
+      document.getElementById('btn-comic-prev').disabled = currentComicIndex === 0;
+      const nextBtn = document.getElementById('btn-comic-next');
+      if (currentComicIndex === comicData.length - 1) {
+        nextBtn.innerHTML = `Concludi Storia <i class="fa-solid fa-check ml-1"></i>`;
+      } else {
+        nextBtn.innerHTML = `Successivo <i class="fa-solid fa-chevron-right ml-1"></i>`;
+      }
+    }
+
+    function changeComic(delta) {
+      stopTTS();
+      sound.playSpell();
+      if (currentComicIndex + delta >= 0 && currentComicIndex + delta < comicData.length) {
+        currentComicIndex += delta;
+        renderComic();
+      } else if (currentComicIndex + delta === comicData.length) {
+        finishComicStory();
+      }
+    }
+
+    function finishComicStory() {
+      addHousePoints(25);
+      unlockBadge('story');
+      speakText("Magnifico lavoro! Hai completato la lettura della storia magica di Ravenna ideata dal Professor Marco Cigolotti! 25 punti assegnati alla tua Casa.");
+    }
+
+    /* ==========================================================================
+       6. SEZIONE 2: ATELIER DEI MOSAICI
+       ========================================================================== */
+    const mosaicCards = [
+      {
+        id: 'c1',
+        title: "Tecnica del Mosaico",
+        subtitle: "L'Alchimia delle Tessere",
+        frontIcon: "fa-cubes",
+        frontColor: "from-amber-600 to-yellow-500",
+        summary: "Come si realizza un capolavoro scintillante che dura 1500 anni?",
+        backText: "Le tessere venivano tagliate da lastre di vetro (pasta vitrea) o pietra con la martellina e il tagliolo. Per l'oro, una sottilissima foglia d'oro zecchino veniva inserita 'a sandwich' tra due strati di vetro trasparente per non consumarsi mai!",
+        lumosSecret: "Incantesimo Lumos: Le tessere non venivano lisciate; la loro superficie rugosa e disuguale cattura la luce delle candele da ogni angolazione, rendendo le figure mistiche e palpitanti!"
+      },
+      {
+        id: 'c2',
+        title: "Basilica di San Vitale",
+        subtitle: "Il Capolavoro dell'Impero",
+        frontIcon: "fa-church",
+        frontColor: "from-blue-700 to-indigo-900",
+        summary: "Capolavoro consacrato nel 547 d.C. con pianta ottagonale centrale.",
+        backText: "All'interno, l'abside ospita i celebri cortei: Giustiniano con il recipiente per il pane eucaristico (patena) e Teodora con il calice del vino. Cristo siede al centro sopra il globo celeste, offrendo la corona a San Vitale.",
+        lumosSecret: "Incantesimo Lumos: Giustiniano e Teodora non hanno mai visitato Ravenna di persona! I mosaici erano potenti 'ologrammi' politici per imporre la loro autorità imperiale e divina."
+      },
+      {
+        id: 'c3',
+        title: "Mausoleo di Galla Placidia",
+        subtitle: "La Notte Stellata del V Secolo",
+        frontIcon: "fa-moon",
+        frontColor: "from-indigo-950 to-blue-900",
+        summary: "Un minuscolo edificio a croce latina che nasconde all'interno l'infinito celeste.",
+        backText: "La cupola rappresenta una volta celeste blu notte costellata da 570 stelle d'oro concentriche disposte attorno a una croce latina gemmata. Nelle lunette spicca la celebre scena del Buon Pastore tra le pecorelle.",
+        lumosSecret: "Incantesimo Lumos: Le sottili finestre sono chiuse da lastre di alabastro ambrato: filtrano una luce morbida e dorata che fa brillare il blu cobalto come un cielo magico notturno!"
+      },
+      {
+        id: 'c4',
+        title: "Sant'Apollinare Nuovo",
+        subtitle: "Le Teorie dei Santi e Vergini",
+        frontIcon: "fa-person-walking",
+        frontColor: "from-amber-700 to-red-900",
+        summary: "Le pareti della navata centrale animate da una processione solenne.",
+        backText: "Su un lato sfilano 26 Martiri verso Cristo in trono; sull'altro 22 Vergini guidate dai tre Re Magi verso la Madonna con Bambino. Tutti i personaggi condividono la stessa altezza e ripetitività ritmica (isocefalia).",
+        lumosSecret: "Incantesimo Lumos: Lo sfondo è interamente in oro scintillante: i santi non camminano su una strada terrena ma in una dimensione atemporale ed eterna!"
+      },
+      {
+        id: 'c5',
+        title: "Ieraticità & Simbolismo",
+        subtitle: "Le Regole dello Stile Bizantino",
+        frontIcon: "fa-eye",
+        frontColor: "from-purple-900 to-slate-900",
+        summary: "I 4 canoni fondamentali che differenziano l'arte bizantina da quella romana.",
+        backText: "1. Ieraticità (sguardo fisso, maestoso e severo);\n2. Bidimensionalità (figure piatte senza chiaroscuro o ombre);\n3. Isocefalia (teste tutte alla medesima altezza nei cortei);\n4. Fondo oro (rappresentazione della luce divina immateriale).",
+        lumosSecret: "Incantesimo Lumos: L'arte bizantina rifiuta il naturalismo: il corpo non è più muscoli e carne, ma solo un involucro spirituale orientato verso la contemplazione di Dio."
+      },
+      {
+        id: 'c6',
+        title: "Porto di Classe & Le Paludi",
+        subtitle: "La Fortezza Naturale",
+        frontIcon: "fa-anchor",
+        frontColor: "from-teal-800 to-cyan-950",
+        summary: "Perché Ravenna fu scelta come capitale per ben tre volte?",
+        backText: "Capitale dell'Impero d'Occidente (402), del Regno Ostrogoto di Teodorico e dell'Esarcato Bizantino. Il porto di Classe accoglieva fino a 250 navi da guerra, garantendo una via di fuga rapida e rifornimenti continui dall'Oriente.",
+        lumosSecret: "Incantesimo Lumos: Le paludi attorno alla città erano navigabili solo da barche a fondo piatto guidate da esperti marinai locali: gli eserciti nemici affondavano nel fango!"
+      }
+    ];
+
+    function renderMosaicCards() {
+      const container = document.getElementById('cards-grid');
+      if (!container) return;
+      container.innerHTML = '';
+
+      mosaicCards.forEach(card => {
+        const cardEl = document.createElement('div');
+        cardEl.className = 'flip-card h-[340px] cursor-pointer';
+        cardEl.id = `card-wrapper-${card.id}`;
+
+        cardEl.innerHTML = `
+          <div class="flip-card-inner relative w-full h-full rounded-2xl shadow-xl">
+            <!-- Front of Card -->
+            <div class="flip-card-front absolute inset-0 rounded-2xl bg-gradient-to-br ${card.frontColor} text-white p-5 flex flex-col justify-between border-2 border-amber-400/60" onclick="flipCard('${card.id}')">
+              <div>
+                <div class="flex justify-between items-center mb-3">
+                  <span class="text-[10px] tracking-wider uppercase font-title bg-black/40 px-2.5 py-1 rounded-full text-amber-300 border border-amber-400/30">Carta Didattica</span>
+                  <div class="flex items-center gap-2">
+                    <button onclick="event.stopPropagation(); speakCardFront('${card.id}')" class="text-amber-300 hover:text-white p-1" title="Ascolta carta">
+                      <i class="fa-solid fa-volume-high"></i>
+                    </button>
+                    <i class="fa-solid ${card.frontIcon} text-amber-300 text-xl"></i>
+                  </div>
+                </div>
+                <h3 class="font-title text-xl font-bold tracking-wide text-amber-100">${card.title}</h3>
+                <p class="text-xs text-amber-200/80 font-medium font-magic mt-0.5">${card.subtitle}</p>
+                <div class="mt-4 p-3 bg-black/30 rounded-xl border border-white/10 text-xs text-slate-200 leading-relaxed font-sans">
+                  ${card.summary}
+                </div>
+              </div>
+
+              <div class="flex items-center justify-between pt-3 border-t border-white/20 text-xs text-amber-200">
+                <span class="font-medium"><i class="fa-solid fa-rotate mr-1"></i> Clicca per girare</span>
+                <span class="text-amber-400 font-bold"><i class="fa-solid fa-wand-magic"></i> Esplora</span>
+              </div>
+            </div>
+
+            <!-- Back of Card -->
+            <div class="flip-card-back absolute inset-0 rounded-2xl bg-amber-50 text-slate-900 p-5 flex flex-col justify-between border-2 border-amber-500 shadow-2xl" id="back-${card.id}">
+              <div>
+                <div class="flex justify-between items-center border-b border-amber-900/20 pb-2 mb-2">
+                  <h4 class="font-title text-sm font-bold text-amber-950">${card.title}</h4>
+                  <div class="flex items-center gap-2">
+                    <button onclick="event.stopPropagation(); speakCardBack('${card.id}')" class="text-indigo-800 hover:text-indigo-600 text-xs p-1" title="Ascolta retro">
+                      <i class="fa-solid fa-volume-high"></i>
+                    </button>
+                    <button onclick="event.stopPropagation(); flipCard('${card.id}')" class="text-xs text-amber-800 hover:text-amber-950 p-1">
+                      <i class="fa-solid fa-rotate-left"></i>
+                    </button>
+                  </div>
+                </div>
+                <p id="card-back-text-${card.id}" class="text-xs text-slate-800 leading-relaxed whitespace-pre-line font-medium mb-3">
+                  ${card.backText}
+                </p>
+                <div id="lumos-box-${card.id}" class="hidden p-2.5 bg-yellow-100 border border-yellow-400 rounded-xl text-[11px] text-amber-950 font-medium animate-pulse">
+                  ${card.lumosSecret}
+                </div>
+              </div>
+
+              <div class="pt-2 border-t border-amber-900/20 flex gap-2">
+                <button onclick="event.stopPropagation(); triggerLumos('${card.id}')" class="flex-1 py-1.5 px-3 bg-amber-600 hover:bg-amber-500 text-slate-950 font-bold text-xs rounded-xl shadow transition flex items-center justify-center gap-1.5">
+                  <i class="fa-solid fa-wand-sparkles"></i> Incantesimo Lumos!
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+        container.appendChild(cardEl);
+      });
+    }
+
+    function flipCard(id) {
+      sound.playSpell();
+      const card = document.getElementById(`card-wrapper-${id}`);
+      card.classList.toggle('flipped');
+      addHousePoints(2);
+      unlockBadge('mosaic');
+    }
+
+    function triggerLumos(id) {
+      sound.playCorrect();
+      const back = document.getElementById(`back-${id}`);
+      const lumosBox = document.getElementById(`lumos-box-${id}`);
+      back.classList.toggle('lumos-active');
+      lumosBox.classList.toggle('hidden');
+      addHousePoints(5);
+      const c = mosaicCards.find(item => item.id === id);
+      if (c && !lumosBox.classList.contains('hidden')) {
+        speakText(c.lumosSecret, lumosBox);
+      }
+    }
+
+    function speakCardFront(id) {
+      const c = mosaicCards.find(item => item.id === id);
+      if (c) {
+        speakText(`${c.title}. ${c.subtitle}. ${c.summary}`);
+      }
+    }
+
+    function speakCardBack(id) {
+      const c = mosaicCards.find(item => item.id === id);
+      if (c) {
+        speakText(`${c.title}. ${c.backText}`, document.getElementById(`card-back-text-${id}`));
+      }
+    }
+
+    /* ==========================================================================
+       7. SEZIONE 3: MINI GIOCHI
+       ========================================================================== */
+    let currentMiniGame = 'recipe';
+
+    function switchMiniGame(game) {
+      currentMiniGame = game;
+      sound.playSpell();
+      stopTTS();
+      const btnRecipe = document.getElementById('btn-game-recipe');
+      const btnTimeline = document.getElementById('btn-game-timeline');
+      const contRecipe = document.getElementById('game-recipe-container');
+      const contTimeline = document.getElementById('game-timeline-container');
+
+      if (game === 'recipe') {
+        btnRecipe.className = 'px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-amber-800 text-amber-100 shadow transition flex items-center gap-2';
+        btnTimeline.className = 'px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-amber-900/10 text-amber-950 hover:bg-amber-900/20 transition flex items-center gap-2 border border-amber-900/30';
+        contRecipe.classList.remove('hidden');
+        contTimeline.classList.add('hidden');
+      } else {
+        btnTimeline.className = 'px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-amber-800 text-amber-100 shadow transition flex items-center gap-2';
+        btnRecipe.className = 'px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-amber-900/10 text-amber-950 hover:bg-amber-900/20 transition flex items-center gap-2 border border-amber-900/30';
+        contTimeline.classList.remove('hidden');
+        contRecipe.classList.add('hidden');
+      }
+    }
+
+    // Mini-Game A: Fasi del Mosaico
+    const correctRecipeOrder = [
+      { id: 1, text: "1. Preparazione del muro di supporto in mattoni (arriccio grezzo)" },
+      { id: 2, text: "2. Stesura degli strati di malta di calce fresca a presa lenta" },
+      { id: 3, text: "3. Disegno preparatorio (sinopia) dipinto sulla malta" },
+      { id: 4, text: "4. Taglio delle tessere vitree con martellina e tagliolo" },
+      { id: 5, text: "5. Inserimento manuale delle tessere con inclinazione per riflettere la luce" }
+    ];
+
+    let currentRecipeUserOrder = [];
+
+    function initRecipeGame() {
+      currentRecipeUserOrder = [...correctRecipeOrder].sort(() => Math.random() - 0.5);
+      renderRecipeItems();
+      document.getElementById('recipe-feedback').textContent = '';
+    }
+
+    function renderRecipeItems() {
+      const list = document.getElementById('recipe-list');
+      if (!list) return;
+      list.innerHTML = '';
+
+      currentRecipeUserOrder.forEach((phase, index) => {
+        const item = document.createElement('div');
+        item.className = 'flex items-center justify-between p-3.5 bg-amber-100/90 border-2 border-amber-700/40 rounded-xl shadow-sm hover:border-amber-600 transition';
+        item.innerHTML = `
+          <div class="flex items-center gap-3">
+            <span class="w-7 h-7 rounded-full bg-amber-800 text-amber-100 font-bold flex items-center justify-center text-xs">${index + 1}</span>
+            <span class="text-xs sm:text-sm font-semibold text-amber-950">${phase.text.substring(3)}</span>
+          </div>
+          <div class="flex items-center gap-1.5">
+            <button onclick="shiftRecipe(${index}, -1)" ${index === 0 ? 'disabled' : ''} class="w-8 h-8 rounded-lg bg-amber-800/10 hover:bg-amber-800 text-amber-900 hover:text-white transition flex items-center justify-center disabled:opacity-20 text-xs">
+              <i class="fa-solid fa-arrow-up"></i>
+            </button>
+            <button onclick="shiftRecipe(${index}, 1)" ${index === currentRecipeUserOrder.length - 1 ? 'disabled' : ''} class="w-8 h-8 rounded-lg bg-amber-800/10 hover:bg-amber-800 text-amber-900 hover:text-white transition flex items-center justify-center disabled:opacity-20 text-xs">
+              <i class="fa-solid fa-arrow-down"></i>
+            </button>
+          </div>
+        `;
+        list.appendChild(item);
+      });
+    }
+
+    function shiftRecipe(idx, dir) {
+      sound.playSpell();
+      const targetIdx = idx + dir;
+      if (targetIdx >= 0 && targetIdx < currentRecipeUserOrder.length) {
+        const temp = currentRecipeUserOrder[idx];
+        currentRecipeUserOrder[idx] = currentRecipeUserOrder[targetIdx];
+        currentRecipeUserOrder[targetIdx] = temp;
+        renderRecipeItems();
+      }
+    }
+
+    function checkRecipeOrder() {
+      let isCorrect = true;
+      for (let i = 0; i < correctRecipeOrder.length; i++) {
+        if (currentRecipeUserOrder[i].id !== correctRecipeOrder[i].id) {
+          isCorrect = false;
+          break;
+        }
+      }
+
+      const fb = document.getElementById('recipe-feedback');
+      if (isCorrect) {
+        sound.playFanfare();
+        fb.className = 'text-center text-xs sm:text-sm font-bold text-emerald-800 bg-emerald-100 p-3 rounded-xl border border-emerald-400';
+        fb.innerHTML = '✨ INCANTESIMO RIUSCITO! L\'ordine delle 5 fasi è perfetto! Sei un vero Magister Musivarius. (+30 Punti Casa)';
+        addHousePoints(30);
+        speakText("Incantesimo riuscito! L'ordine delle 5 fasi del mosaico è perfetto!");
+      } else {
+        sound.playWrong();
+        fb.className = 'text-center text-xs sm:text-sm font-bold text-rose-800 bg-rose-100 p-3 rounded-xl border border-rose-400';
+        fb.innerHTML = '⚡ Ordine non corretto! Ricorda: prima prepari il muro e la calce, poi dipingi la sinopia e solo alla fine tagli e inserisci le tessere!';
+        speakText("Ordine non corretto. Ricorda: prima la preparazione del muro e della calce, poi la sinopia e alla fine il taglio e l'inserimento delle tessere.");
+      }
+    }
+
+    function resetRecipeGame() {
+      sound.playSpell();
+      initRecipeGame();
+    }
+
+    // Mini-Game B: Timeline Monument Pairing
+    const timelinePairs = [
+      { id: 't1', mon: "Mausoleo di Galla Placidia", desc: "Secolo V d.C. • Cielo stellato con 570 stelle d'oro e finestre in alabastro" },
+      { id: 't2', mon: "Basilica di San Vitale", desc: "Secolo VI d.C. • Pianta ottagonale e cortei imperiali di Giustiniano e Teodora" },
+      { id: 't3', mon: "Sant'Apollinare Nuovo", desc: "Età di Teodorico & Bizantina • Processione di Martiri e Vergini con isocefalia" },
+      { id: 't4', mon: "Basilica di Sant'Apollinare in Classe", desc: "Secolo VI d.C. • Il santo patrono tra le pecore in un paradiso verde e dorato" }
+    ];
+
+    let selectedColA = null;
+    let solvedTimelineCount = 0;
+
+    function initTimelineGame() {
+      solvedTimelineCount = 0;
+      selectedColA = null;
+      document.getElementById('timeline-feedback').textContent = '';
+
+      const colA = document.getElementById('timeline-col-a');
+      const colB = document.getElementById('timeline-col-b');
+      if (!colA || !colB) return;
+
+      colA.innerHTML = '<h4 class="font-title text-xs font-bold text-amber-900 uppercase tracking-wider text-center">Monumento</h4>';
+      colB.innerHTML = '<h4 class="font-title text-xs font-bold text-amber-900 uppercase tracking-wider text-center">Caratteristica Chiave</h4>';
+
+      const shuffledB = [...timelinePairs].sort(() => Math.random() - 0.5);
+
+      timelinePairs.forEach(p => {
+        const btnA = document.createElement('button');
+        btnA.id = `btn-pair-a-${p.id}`;
+        btnA.className = 'w-full text-left p-3 rounded-xl bg-amber-100 border-2 border-amber-900/30 text-amber-950 font-bold text-xs sm:text-sm hover:border-amber-700 transition shadow-sm';
+        btnA.innerHTML = `<i class="fa-solid fa-monument text-amber-700 mr-2"></i> ${p.mon}`;
+        btnA.onclick = () => selectPairA(p.id);
+        colA.appendChild(btnA);
+      });
+
+      shuffledB.forEach(p => {
+        const btnB = document.createElement('button');
+        btnB.id = `btn-pair-b-${p.id}`;
+        btnB.className = 'w-full text-left p-3 rounded-xl bg-amber-100 border-2 border-amber-900/30 text-slate-800 text-xs font-medium hover:border-amber-700 transition shadow-sm';
+        btnB.innerHTML = `<i class="fa-solid fa-sparkles text-amber-600 mr-1.5"></i> ${p.desc}`;
+        btnB.onclick = () => selectPairB(p.id);
+        colB.appendChild(btnB);
+      });
+    }
+
+    function selectPairA(id) {
+      sound.playSpell();
+      selectedColA = id;
+      timelinePairs.forEach(p => {
+        const el = document.getElementById(`btn-pair-a-${p.id}`);
+        if (el && !el.disabled) {
+          el.classList.remove('bg-amber-300', 'border-amber-600');
+          el.classList.add('bg-amber-100');
+        }
+      });
+      const active = document.getElementById(`btn-pair-a-${id}`);
+      if (active) active.classList.add('bg-amber-300', 'border-amber-600');
+    }
+
+    function selectPairB(id) {
+      if (!selectedColA) {
+        sound.playWrong();
+        document.getElementById('timeline-feedback').innerHTML = '<span class="text-rose-800">Seleziona prima un monumento a sinistra!</span>';
+        return;
+      }
+
+      if (selectedColA === id) {
+        sound.playCorrect();
+        const btnA = document.getElementById(`btn-pair-a-${id}`);
+        const btnB = document.getElementById(`btn-pair-b-${id}`);
+        btnA.classList.replace('bg-amber-300', 'bg-emerald-200');
+        btnB.classList.replace('bg-amber-100', 'bg-emerald-200');
+        btnA.disabled = true;
+        btnB.disabled = true;
+        selectedColA = null;
+        solvedTimelineCount++;
+        addHousePoints(10);
+
+        if (solvedTimelineCount === timelinePairs.length) {
+          sound.playFanfare();
+          const fb = document.getElementById('timeline-feedback');
+          fb.className = 'text-center text-xs sm:text-sm font-bold text-emerald-800 bg-emerald-100 p-3 rounded-xl border border-emerald-400';
+          fb.innerHTML = '✨ ECCELLENTE! Hai associato tutti i monumenti storici con precisione da storico dell\'arte! (+40 Punti)';
+          speakText("Eccellente! Hai completato la mappa del tempo associando tutti i capolavori di Ravenna!");
+        }
+      } else {
+        sound.playWrong();
+        const fb = document.getElementById('timeline-feedback');
+        fb.className = 'text-center text-xs sm:text-sm font-bold text-rose-800 bg-rose-100 p-2.5 rounded-xl border border-rose-400';
+        fb.innerHTML = '⚡ Abbinamento errato! Rileggi le caratteristiche storiche e riprova.';
+      }
+    }
+
+    /* ==========================================================================
+       8. SEZIONE 4: PRACTICE QUIZ
+       ========================================================================== */
+    const quizQuestions = [
+      {
+        category: "Luce & Trascendenza",
+        question: "Per quale motivo principale i maestri bizantini usavano tessere dorate come sfondo nei mosaici delle chiese?",
+        options: [
+          { text: "A) Per mostrare semplicemente la ricchezza economica e le miniere d'oro dell'Imperatore.", isCorrect: false },
+          { text: "B) Per annullare lo spazio terreno e creare una luce soprannaturale, simbolo del Regno di Dio.", isCorrect: true },
+          { text: "C) Perché la pittura ad affresco era vietata dalla legge del senato di Ravenna.", isCorrect: false },
+          { text: "D) Perché l'oro rifletteva il calore e riscaldava gli ambienti durante l'inverno.", isCorrect: false }
+        ],
+        explanation: "Esatto! Nell'arte bizantina l'oro non ha scopo decorativo o sfarzoso fine a se stesso: rappresenta la Luce Divina Incorporea. Annulla il paesaggio terreno e proietta i santi in uno spazio eterno e soprannaturale."
+      },
+      {
+        category: "Vocabolario dell'Arte",
+        question: "Cosa significa il termine artistico 'IERATICO', tipico delle figure dei mosaici bizantini?",
+        options: [
+          { text: "A) Figure in movimento dinamico che compiono salti acrobatici ed espressivi.", isCorrect: false },
+          { text: "B) Ritratti ironici e divertenti pensati per far sorridere il popolo fedele.", isCorrect: false },
+          { text: "C) Figure solenni, rigide, frontali, con sguardi fissi che comunicano sacralità e distacco.", isCorrect: true },
+          { text: "D) Figure dipinte a grandezza naturale con forti ombre e muscoli sporgenti.", isCorrect: false }
+        ],
+        explanation: "Bravissimo! Ieratico deriva dal greco hierós (sacro). Indica figure rigorose, immobili e austere che fissano l'osservatore per comunicare la solennità spirituale e la grandezza immortale."
+      },
+      {
+        category: "Figure Imperiali",
+        question: "A San Vitale, perché Giustiniano e Teodora sono raffigurati con l'aureola attorno al capo?",
+        options: [
+          { text: "A) Per celebrare la loro investitura sacra: l'Imperatore era considerato vicario di Cristo in terra.", isCorrect: true },
+          { text: "B) Perché entrambi erano stati canonizzati come santi prima di salire al trono.", isCorrect: false },
+          { text: "C) Fu un errore commesso dai maestri mosaicisti che li scambiarono per apostoli.", isCorrect: false },
+          { text: "D) L'aureola indicava semplicemente che indossavano un cappello dorato orientale.", isCorrect: false }
+        ],
+        explanation: "Corretto! Nella cultura bizantina il potere politico e religioso erano fusi (cesaropapismo). L'aureola attorno ai sovrani simboleggiava che la loro autorità terrena discendeva direttamente dal volere divino."
+      },
+      {
+        category: "Spazio & Volume",
+        question: "Quale caratteristica spaziale contraddistingue le figure umane nei mosaici ravennati?",
+        options: [
+          { text: "A) Prospettiva scientifica con punto di fuga all'orizzonte e ombre scure.", isCorrect: false },
+          { text: "B) Bidimensionalità e appiattimento: mancano ombre portate e i corpi sembrano sospesi.", isCorrect: true },
+          { text: "C) Tridimensionalità scultorea tipica della Roma repubblicana.", isCorrect: false },
+          { text: "D) Uso della sfocatura leonardesca per rendere l'atmosfera nebbiosa.", isCorrect: false }
+        ],
+        explanation: "Perfetto! Le figure sono prive di peso, volume e ombre sul terreno. Questa bidimensionalità serviva a ricordare ai fedeli che i santi e i sovrani appartenevano alla dimensione dello spirito e non a quella materiale terrena."
+      },
+      {
+        category: "Architettura & Luce",
+        question: "Nel Mausoleo di Galla Placidia, attraverso quale materiale filtra la luce naturale che accende i mosaici?",
+        options: [
+          { text: "A) Grandi vetrate colorate gotiche con piombo.", isCorrect: false },
+          { text: "B) Specchi magici in bronzo lucidato.", isCorrect: false },
+          { text: "C) Sottili lastre di alabastro che creano una luce calda e soffusa.", isCorrect: true },
+          { text: "D) Torce a olio murate all'interno delle colonne ottagonali.", isCorrect: false }
+        ],
+        explanation: "Ottimo! Le strette finestre sono schermate da sottili lastre di alabastro, un minerale traslucido che trasforma la luce solare in un raggio ambrato e soffuso, esaltando la magica volta blu con le 570 stelle d'oro."
+      }
+    ];
+
+    let currentQuizIndex = 0;
+    let quizScore = 0;
+
+    function renderQuizQuestion() {
+      const q = quizQuestions[currentQuizIndex];
+      document.getElementById('quiz-current-idx').textContent = currentQuizIndex + 1;
+      document.getElementById('quiz-total-idx').textContent = quizQuestions.length;
+      document.getElementById('quiz-category').textContent = q.category;
+      document.getElementById('quiz-question-text').textContent = q.question;
+
+      const optsContainer = document.getElementById('quiz-options');
+      optsContainer.innerHTML = '';
+
+      const explBox = document.getElementById('quiz-explanation-box');
+      explBox.classList.add('hidden');
+
+      q.options.forEach((opt, idx) => {
+        const btn = document.createElement('button');
+        btn.id = `quiz-opt-${idx}`;
+        btn.className = 'w-full text-left p-4 rounded-xl bg-amber-100/90 border-2 border-amber-900/30 text-amber-950 font-semibold text-xs sm:text-sm hover:bg-amber-200/90 hover:border-amber-700 transition shadow-sm';
+        btn.textContent = opt.text;
+        btn.onclick = () => selectQuizAnswer(idx);
+        optsContainer.appendChild(btn);
+      });
+    }
+
+    function selectQuizAnswer(selectedIndex) {
+      stopTTS();
+      const q = quizQuestions[currentQuizIndex];
+      const selected = q.options[selectedIndex];
+
+      q.options.forEach((_, idx) => {
+        const btn = document.getElementById(`quiz-opt-${idx}`);
+        btn.disabled = true;
+      });
+
+      const selectedBtn = document.getElementById(`quiz-opt-${selectedIndex}`);
+      const explBox = document.getElementById('quiz-explanation-box');
+      const explTitle = document.getElementById('quiz-expl-title');
+      const explText = document.getElementById('quiz-expl-text');
+      const explIcon = document.getElementById('quiz-expl-icon');
+
+      explBox.classList.remove('hidden');
+
+      if (selected.isCorrect) {
+        sound.playCorrect();
+        quizScore++;
+        addHousePoints(20);
+        selectedBtn.classList.replace('bg-amber-100/90', 'bg-emerald-200');
+        selectedBtn.classList.add('border-emerald-600', 'text-emerald-950');
+
+        explBox.className = 'p-4 rounded-xl border-2 bg-emerald-50 border-emerald-500 text-emerald-950';
+        explIcon.className = 'fa-solid fa-circle-check text-emerald-600 text-lg mt-0.5';
+        explTitle.textContent = 'Risposta Esatta! (+20 Punti)';
+      } else {
+        sound.playWrong();
+        selectedBtn.classList.replace('bg-amber-100/90', 'bg-rose-200');
+        selectedBtn.classList.add('border-rose-600', 'text-rose-950');
+
+        q.options.forEach((opt, idx) => {
+          if (opt.isCorrect) {
+            const corrBtn = document.getElementById(`quiz-opt-${idx}`);
+            corrBtn.classList.replace('bg-amber-100/90', 'bg-emerald-100');
+            corrBtn.classList.add('border-emerald-500');
+          }
+        });
+
+        explBox.className = 'p-4 rounded-xl border-2 bg-rose-50 border-rose-500 text-rose-950';
+        explIcon.className = 'fa-solid fa-circle-xmark text-rose-600 text-lg mt-0.5';
+        explTitle.textContent = 'Non esattamente!';
+      }
+
+      explText.textContent = q.explanation;
+    }
+
+    function nextQuizQuestion() {
+      stopTTS();
+      sound.playSpell();
+      if (currentQuizIndex < quizQuestions.length - 1) {
+        currentQuizIndex++;
+        renderQuizQuestion();
+      } else {
+        showQuizResults();
+      }
+    }
+
+    function showQuizResults() {
+      document.getElementById('quiz-container').classList.add('hidden');
+      const resScreen = document.getElementById('quiz-result-screen');
+      resScreen.classList.remove('hidden');
+
+      document.getElementById('quiz-result-score').textContent = `Hai totalizzato ${quizScore} su ${quizQuestions.length} risposte corrette!`;
+      const feedback = document.getElementById('quiz-result-feedback');
+
+      if (quizScore >= 4) {
+        sound.playFanfare();
+        feedback.textContent = 'Eccezionale! Hai meritato il titolo di Mago Sopraffine dell\'Arte Bizantina!';
+      } else {
+        sound.playSpell();
+        feedback.textContent = 'Buon lavoro! Riguarda le carte dell\'Atelier dei Mosaici per consolidare i tuoi poteri e riprova!';
+      }
+    }
+
+    function restartQuiz() {
+      stopTTS();
+      currentQuizIndex = 0;
+      quizScore = 0;
+      document.getElementById('quiz-container').classList.remove('hidden');
+      document.getElementById('quiz-result-screen').classList.add('hidden');
+      renderQuizQuestion();
+    }
+
+    /* ==========================================================================
+       9. SEZIONE 5: BOSS DUEL (Harry vs Lord Voldemort)
+       ========================================================================== */
+    const rapidBossQuestions = [
+      {
+        q: "Cosa significa ISOCEFALIA nei cortei di Ravenna?",
+        correct: "Le teste sono allineate alla stessa altezza",
+        wrong: "I corpi sono piegati ad arco"
+      },
+      {
+        q: "I mosaici di Ravenna mostrano ombre sul terreno?",
+        correct: "No, assenza totale di ombre terrene",
+        wrong: "Sì, ombre marcate e prospettiche"
+      },
+      {
+        q: "Quale figura simboleggia Cristo tra le pecore a Galla Placidia?",
+        correct: "Il Buon Pastore",
+        wrong: "Il Leone Alato"
+      },
+      {
+        q: "Che forma ha la pianta della Basilica di San Vitale?",
+        correct: "Ottagonale a nucleo centrale",
+        wrong: "A croce latina a 5 navate"
+      },
+      {
+        q: "Da chi era governata Ravenna nel VI secolo durante San Vitale?",
+        correct: "Dall'Impero Bizantino (Giustiniano)",
+        wrong: "Dall'Impero Romano di Giulio Cesare"
+      },
+      {
+        q: "Come si chiamano i piccoli tasselli colorati del mosaico?",
+        correct: "Tessere in pasta vitrea",
+        wrong: "Pennellate di tempera ad uovo"
+      },
+      {
+        q: "Quale porto collegava Ravenna direttamente a Bisanzio?",
+        correct: "Il porto militare e commerciale di Classe",
+        wrong: "Il porto fluviale di Ostia"
+      },
+      {
+        q: "Come si realizzava la lucentezza delle tessere d'oro?",
+        correct: "Foglia d'oro protetta a sandwich tra strati di vetro",
+        wrong: "Polvere d'oro spolverata sulla calce bagnata"
+      }
+    ];
+
+    let duelTimerInterval = null;
+    let duelTimeLeft = 60;
+    let harryHp = 100;
+    let bossHp = 100;
+    let currentRapidQ = null;
+    let duelIsActive = false;
+
+    function startDuel() {
+      stopTTS();
+      sound.playSpell();
+      duelIsActive = true;
+      harryHp = 100;
+      bossHp = 100;
+      
+      duelTimeLeft = extraDuelTimeEnabled ? 90 : 60;
+      document.getElementById('duel-timer').textContent = `${duelTimeLeft}s`;
+      updateDuelHPUi();
+
+      document.getElementById('boss-start-prompt').classList.add('hidden');
+      document.getElementById('boss-end-screen').classList.add('hidden');
+      document.getElementById('boss-question-box').classList.remove('hidden');
+      document.getElementById('duel-status-text').textContent = "DUELLO INIZIATO! Scaglia le tessere d'oro contro Lord Voldemort!";
+
+      clearInterval(duelTimerInterval);
+      duelTimerInterval = setInterval(() => {
+        duelTimeLeft--;
+        document.getElementById('duel-timer').textContent = `${duelTimeLeft}s`;
+        if (duelTimeLeft <= 0) {
+          endDuel(false, "TEMPO SCADUTO! Lord Voldemort ha scatenato la maledizione del Marchio Nero!");
+        }
+      }, 1000);
+
+      loadNextRapidQuestion();
+    }
+
+    function loadNextRapidQuestion() {
+      if (!duelIsActive) return;
+      currentRapidQ = rapidBossQuestions[Math.floor(Math.random() * rapidBossQuestions.length)];
+      document.getElementById('boss-question-prompt').textContent = currentRapidQ.q;
+
+      const grid = document.getElementById('boss-answers-grid');
+      grid.innerHTML = '';
+
+      const isFirstCorrect = Math.random() > 0.5;
+      const opts = isFirstCorrect 
+        ? [{ text: currentRapidQ.correct, correct: true }, { text: currentRapidQ.wrong, correct: false }]
+        : [{ text: currentRapidQ.wrong, correct: false }, { text: currentRapidQ.correct, correct: true }];
+
+      opts.forEach(opt => {
+        const btn = document.createElement('button');
+        btn.className = 'p-3 bg-slate-800 hover:bg-slate-700 active:scale-95 border-2 border-emerald-400/40 rounded-xl text-xs sm:text-sm font-bold text-amber-200 transition shadow flex items-center justify-center gap-2';
+        btn.innerHTML = `<i class="fa-solid fa-wand-magic"></i> ${opt.text}`;
+        btn.onclick = () => answerRapid(opt.correct);
+        grid.appendChild(btn);
+      });
+    }
+
+    function answerRapid(isCorrect) {
+      if (!duelIsActive) return;
+
+      const beamHarry = document.getElementById('spell-beam-harry');
+      const beamBoss = document.getElementById('spell-beam-boss');
+      const statusText = document.getElementById('duel-status-text');
+
+      if (isCorrect) {
+        sound.playSpell();
+        bossHp = Math.max(0, bossHp - 25);
+        updateDuelHPUi();
+
+        beamHarry.style.width = '100%';
+        beamHarry.style.opacity = '1';
+        statusText.innerHTML = "<span class='text-yellow-300 font-bold'>EXPELLIARMUS! Scarica di tessere d'oro a segno su Lord Voldemort (-25 HP)!</span>";
+        sound.playHit();
+
+        const voldemortCard = document.getElementById('voldemort-card');
+        voldemortCard.classList.add('scale-95');
+        setTimeout(() => {
+          beamHarry.style.width = '0%';
+          beamHarry.style.opacity = '0';
+          voldemortCard.classList.remove('scale-95');
+        }, 400);
+
+        if (bossHp <= 0) {
+          endDuel(true, "VITTORIA! Hai sbaragliato Lord Voldemort e difeso l'oro sacro di Bisanzio!");
+          return;
+        }
+      } else {
+        sound.playWrong();
+        harryHp = Math.max(0, harryHp - 25);
+        updateDuelHPUi();
+
+        beamBoss.style.width = '100%';
+        beamBoss.style.opacity = '1';
+        statusText.innerHTML = "<span class='text-emerald-400 font-bold'>MALEDIZIONE DI VOLDEMORT! Il raggio verde oscuro ti colpisce (-25 HP)!</span>";
+        sound.playHit();
+
+        const harryCard = document.getElementById('harry-card');
+        harryCard.classList.add('border-emerald-500', 'scale-95');
+        setTimeout(() => {
+          beamBoss.style.width = '0%';
+          beamBoss.style.opacity = '0';
+          harryCard.classList.remove('border-emerald-500', 'scale-95');
+        }, 400);
+
+        if (harryHp <= 0) {
+          endDuel(false, "SCONFITTA! Le tue energie sono esaurite contro il Signore Oscuro! Riprova il duello magico.");
+          return;
+        }
+      }
+
+      loadNextRapidQuestion();
+    }
+
+    function updateDuelHPUi() {
+      document.getElementById('harry-hp-text').textContent = `${harryHp} / 100 HP`;
+      document.getElementById('boss-hp-text').textContent = `${bossHp} / 100 HP`;
+      document.getElementById('harry-hp-bar').style.width = `${harryHp}%`;
+      document.getElementById('boss-hp-bar').style.width = `${bossHp}%`;
+    }
+
+    function endDuel(won, msg) {
+      duelIsActive = false;
+      clearInterval(duelTimerInterval);
+
+      document.getElementById('boss-question-box').classList.add('hidden');
+      const endScreen = document.getElementById('boss-end-screen');
+      endScreen.classList.remove('hidden');
+
+      const endIcon = document.getElementById('boss-end-icon');
+      const endTitle = document.getElementById('boss-end-title');
+      const endDesc = document.getElementById('boss-end-desc');
+
+      if (won) {
+        sound.playFanfare();
+        endIcon.textContent = "⚡🏆⚡";
+        endTitle.textContent = "VITTORIA SU VOLDEMORT!";
+        endTitle.className = "font-title text-2xl font-bold text-yellow-300";
+        endDesc.innerHTML = `${msg} <br><strong>+100 Punti Casa assegnati e Distintivo Duellante sbloccato!</strong>`;
+        addHousePoints(100);
+        unlockBadge('boss');
+        speakText("Vittoria magica! Hai respinto Lord Voldemort e difeso l'oro sacro di Ravenna!");
+      } else {
+        sound.playWrong();
+        endIcon.textContent = "💀";
+        endTitle.textContent = "DUELLO PERSO!";
+        endTitle.className = "font-title text-2xl font-bold text-emerald-400";
+        endDesc.textContent = msg;
+        speakText("Duello perso! Voldemort ha prevalso per ora, ma puoi riprovare subito la sfida!");
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      initFloatingParticles();
+      renderComic();
+      renderMosaicCards();
+      initRecipeGame();
+      initTimelineGame();
+      renderQuizQuestion();
+    });
+  </script>
+</body>
+</html>
