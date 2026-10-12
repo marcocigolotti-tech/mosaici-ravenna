@@ -1,0 +1,36 @@
+FONTI DELLE FOTOGRAFIE
+
+Ideazione didattica: Prof. Marco Cigolotti
+Le foto sono ridimensionate a un massimo di 1800 pixel, senza ritagli né modifiche di colore.
+Le licenze delle fotografie restano quelle indicate, anche nel pacchetto redistribuito.
+
+images/giustiniano.jpg
+Giustiniano — San Vitale
+Autore: Petar Milošević; correzione prospettica di Tintero21
+Fonte: https://commons.wikimedia.org/wiki/File:Mosaic_of_Justinianus_I_-_Basilica_San_Vitale_%28Ravenna%29.jpg
+Licenza: CC BY-SA 4.0 https://creativecommons.org/licenses/by-sa/4.0/
+
+images/teodora.jpg
+Teodora e il suo corteo — San Vitale
+Autore: Petar Milošević
+Fonte: https://commons.wikimedia.org/wiki/File:Mosaic_of_Theodora_-_Basilica_San_Vitale_%28Ravenna%29.jpg
+Licenza: CC BY-SA 4.0 https://creativecommons.org/licenses/by-sa/4.0/
+
+images/galla.jpg
+Interno del Mausoleo di Galla Placidia
+Autore: Petar Milošević
+Fonte: https://commons.wikimedia.org/wiki/File:Mausoleum_of_Galla_Placidia_mosaics.jpg
+Licenza: CC BY-SA 4.0 https://creativecommons.org/licenses/by-sa/4.0/
+
+images/vergini.jpg
+Processione delle Vergini — Sant’Apollinare Nuovo
+Autore: Carlo Pelagalli
+Fonte: https://commons.wikimedia.org/wiki/File:Sant%27Apollinare_Nuovo%2C_mosaico_dell_processione_delle_Vergini_-_panoramio.jpg
+Licenza: CC BY-SA 3.0 https://creativecommons.org/licenses/by-sa/3.0/
+
+images/porto.jpg
+Porto di Classe — Sant’Apollinare Nuovo
+Autore: Carlo Pelagalli
+Fonte: https://commons.wikimedia.org/wiki/File:Sant%27Apollinare_Nuovo%2C_mosaico_del_porto_di_Classe_da_cui_parte_la_processione_delle_Vergini_-_panoramio.jpg
+Licenza: CC BY-SA 3.0 https://creativecommons.org/licenses/by-sa/3.0/
+

@@ -191,7 +191,20 @@
       animation: none !important;
       transition: none !important;
     }
-  </style>
+  
+.photo-figure {margin:1rem 0; font-family:var(--app-font-family);}
+.photo-figure button {display:block;width:100%;cursor:zoom-in;background:#101827;border:1px solid #b8860b;border-radius:12px;padding:0;overflow:hidden;}
+.photo-figure img {width:100%;height:240px;object-fit:contain;display:block;}
+.photo-figure figcaption {font-size:.8rem;line-height:1.5;padding:.5rem 0;}
+.photo-figure a {text-decoration:underline;}
+.photo-figure button:focus-visible {outline:3px solid #d97706;outline-offset:3px;}
+.flip-card .photo-figure img {height:170px;}
+.flip-card-front,.flip-card-back {overflow-y:auto;}
+#photo-viewer {width:min(96vw,1200px);max-width:1200px;max-height:94vh;padding:1rem;background:#0f172a;color:#fff;border:2px solid #d4af37;border-radius:16px;}
+#photo-viewer::backdrop {background:rgba(0,0,0,.88);}
+#photo-viewer img {display:block;width:100%;max-height:70vh;object-fit:contain;}
+.photo-close {padding:.7rem 1rem;border:1px solid #d4af37;border-radius:8px;margin-bottom:.7rem;}
+</style>
 </head>
 <body class="min-h-screen flex flex-col justify-between selection:bg-amber-400 selection:text-slate-900">
 
@@ -601,6 +614,7 @@
           </button>
         </div>
 
+        <div class="mb-8"><h3 class="font-title text-xl font-bold">Osserva i mosaici reali</h3><p>Fotografie autentiche. Premi una fotografia per ingrandirla e osservarne i dettagli.</p><div id="photo-gallery" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div></div>
         <!-- Grid of Interactive Cards -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="cards-grid">
           <!-- Populated by JS -->
@@ -708,6 +722,7 @@
             </h3>
           </div>
 
+          <div id="quiz-photo"></div>
           <div id="quiz-options" class="grid grid-cols-1 gap-3">
             <!-- Populated dynamically -->
           </div>
@@ -1575,6 +1590,23 @@
     /* ==========================================================================
        6. SEZIONE 2: ATELIER DEI MOSAICI
        ========================================================================== */
+
+const realPhotos = [{"id": "giustiniano", "title": "Giustiniano — San Vitale", "alt": "Giustiniano frontale, con corona, aureola e veste purpurea nel mosaico di San Vitale.", "author": "Petar Milošević; correzione prospettica di Tintero21", "license": "4.0", "file": "Mosaic of Justinianus I - Basilica San Vitale (Ravenna).jpg", "note": "Osserva l’aureola, lo sguardo frontale e la veste imperiale.", "source": "https://commons.wikimedia.org/wiki/File:Mosaic_of_Justinianus_I_-_Basilica_San_Vitale_%28Ravenna%29.jpg", "src": "images/giustiniano.jpg"}, {"id": "teodora", "title": "Teodora e il suo corteo — San Vitale", "alt": "Mosaico di Teodora e del suo seguito, su fondo oro, nella basilica di San Vitale.", "author": "Petar Milošević", "license": "4.0", "file": "Mosaic of Theodora - Basilica San Vitale (Ravenna).jpg", "note": "Cerca il calice di Teodora e confronta le posture dei personaggi.", "source": "https://commons.wikimedia.org/wiki/File:Mosaic_of_Theodora_-_Basilica_San_Vitale_%28Ravenna%29.jpg", "src": "images/teodora.jpg"}, {"id": "galla", "title": "Interno del Mausoleo di Galla Placidia", "alt": "Volte e cupola del Mausoleo di Galla Placidia decorate con mosaici blu, motivi vegetali e stelle dorate.", "author": "Petar Milošević", "license": "4.0", "file": "Mausoleum of Galla Placidia mosaics.jpg", "note": "Distingui la cupola stellata dai motivi decorativi delle volte.", "source": "https://commons.wikimedia.org/wiki/File:Mausoleum_of_Galla_Placidia_mosaics.jpg", "src": "images/galla.jpg"}, {"id": "vergini", "title": "Processione delle Vergini — Sant’Apollinare Nuovo", "alt": "Vergini in processione su fondo oro nei mosaici di Sant’Apollinare Nuovo.", "author": "Carlo Pelagalli", "license": "3.0", "file": "Sant'Apollinare Nuovo, mosaico dell processione delle Vergini - panoramio.jpg", "note": "Osserva il ritmo delle figure e l’allineamento delle teste.", "source": "https://commons.wikimedia.org/wiki/File:Sant%27Apollinare_Nuovo%2C_mosaico_dell_processione_delle_Vergini_-_panoramio.jpg", "src": "images/vergini.jpg"}, {"id": "porto", "title": "Porto di Classe — Sant’Apollinare Nuovo", "alt": "Mosaico del porto di Classe con navi, mura e la scritta Civitas Classis.", "author": "Carlo Pelagalli", "license": "3.0", "file": "Sant'Apollinare Nuovo, mosaico del porto di Classe da cui parte la processione delle Vergini - panoramio.jpg", "note": "Questa è una rappresentazione antica del porto, non una fotografia del sito archeologico.", "source": "https://commons.wikimedia.org/wiki/File:Sant%27Apollinare_Nuovo%2C_mosaico_del_porto_di_Classe_da_cui_parte_la_processione_delle_Vergini_-_panoramio.jpg", "src": "images/porto.jpg"}];
+function photoCredit(p) {return `${p.author} · <a href="${p.source}" target="_blank" rel="noopener noreferrer">Wikimedia Commons</a> · <a href="https://creativecommons.org/licenses/by-sa/${p.license}/" target="_blank" rel="noopener noreferrer">CC BY-SA ${p.license}</a> · Ridimensionata, senza ritagli.`;}
+function photoMarkup(id,compact=false) {
+ const p=realPhotos.find(p=>p.id===id); if(!p) return '';
+ return `<figure class="photo-figure"><button type="button" onclick="event.stopPropagation();openRealPhoto('${id}')" aria-label="Ingrandisci: ${p.title}"><img src="${p.src}" alt="${p.alt}" loading="lazy" decoding="async"></button><figcaption><strong>${p.title}</strong><br>${photoCredit(p)}${compact?'':`<br>${p.note}`}</figcaption></figure>`;
+}
+function openRealPhoto(id) {
+ const p=realPhotos.find(p=>p.id===id); if(!p)return;
+ document.getElementById('photo-viewer-content').innerHTML=`<img src="${p.src}" alt="${p.alt}"><p>${p.title}</p><p>${p.note}</p><p>${photoCredit(p)}</p>`;
+ document.getElementById('photo-viewer').showModal();
+}
+document.addEventListener('DOMContentLoaded',()=>{
+ document.getElementById('photo-gallery').innerHTML=realPhotos.map(p=>photoMarkup(p.id)).join('');
+ const d=document.getElementById('photo-viewer');d.addEventListener('click',e=>{if(e.target===d)d.close();});
+});
+
     const mosaicCards = [
       {
         id: 'c1',
@@ -1645,7 +1677,7 @@
 
       mosaicCards.forEach(card => {
         const cardEl = document.createElement('div');
-        cardEl.className = 'flip-card h-[340px] cursor-pointer';
+        cardEl.className = 'flip-card h-[540px] cursor-pointer';
         cardEl.id = `card-wrapper-${card.id}`;
 
         cardEl.innerHTML = `
@@ -1666,6 +1698,7 @@
                 <p class="text-xs text-amber-200/80 font-medium font-magic mt-0.5">${card.subtitle}</p>
                 <div class="mt-4 p-3 bg-black/30 rounded-xl border border-white/10 text-xs text-slate-200 leading-relaxed font-sans">
                   ${card.summary}
+                  ${photoMarkup(({c1:'teodora',c2:'teodora',c3:'galla',c4:'vergini',c5:'giustiniano',c6:'porto'})[card.id],true)}
                 </div>
               </div>
 
@@ -2016,6 +2049,7 @@
       document.getElementById('quiz-total-idx').textContent = quizQuestions.length;
       document.getElementById('quiz-category').textContent = q.category;
       document.getElementById('quiz-question-text').textContent = q.question;
+      document.getElementById('quiz-photo').innerHTML = photoMarkup(['teodora','giustiniano','giustiniano','vergini','galla'][currentQuizIndex]);
 
       const optsContainer = document.getElementById('quiz-options');
       optsContainer.innerHTML = '';
@@ -2325,5 +2359,6 @@
       renderQuizQuestion();
     });
   </script>
+<dialog id="photo-viewer" aria-label="Fotografia ingrandita"><button class="photo-close" onclick="document.getElementById('photo-viewer').close()">Chiudi ✕</button><div id="photo-viewer-content"></div></dialog>
 </body>
 </html>

@@ -1,0 +1,7 @@
+L’ORO DI BISANZIO — VERSIONE CON FOTOGRAFIE REALI
+
+Carica su GitHub index.html, la cartella images e FONTI_IMMAGINI.txt nella stessa cartella del progetto. Mantieni la cartella images e i nomi dei file.
+
+Le fotografie sono incluse; il gioco usa ancora Internet per Tailwind, Google Fonts e Font Awesome, come la versione originale.
+
+Le immagini sono presenti nell’Atelier e nelle cinque domande del quiz originale. La galleria permette di ingrandirle con un clic; Esc chiude la foto. Le funzionalità e il numero di domande del gioco originale sono conservati.
